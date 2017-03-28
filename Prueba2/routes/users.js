@@ -164,6 +164,7 @@ router.io.on('connection', function (socket) {
     });
 
     socket.on('Detalle', function (codigo, callback) {
+        console.log('EL CODIGO ES:'+ codigo);
 
         controllerModelo.getDetalle(codigo, function (error, productos) {
             if (error) {

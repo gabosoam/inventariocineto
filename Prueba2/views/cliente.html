@@ -20,11 +20,13 @@
 
         <div class="topnav" id="myTopnav">
 
-            <a href="#" class="w3-bar-item w3-button ">Sistema de inventario</a>
-            <a href="/home" class="w3-bar-item w3-button "><span class="fa fa-home"></span> Inicio</a>
+
+            <a href="/home" class="w3-bar-item w3-button "><span class="fa fa-home"></span> Inventario</a>
             <a href="/cliente" class="w3-bar-item w3-button"><span class="fa fa-address-book"></span> Clientes</a>
             <a href="#" class="w3-bar-item w3-button"><span class="fa fa-wrench"></span> Técnicos</a>
             <a href="/inventario" class="w3-bar-item w3-button"><span class="fa fa-th-large"></span> Inventario</a>
+            <a href="/ingresos" class="w3-bar-item w3-button"><span class="fa fa-shopping-cart"></span> Ingresos</a>
+            <a href="/ingresos" class="w3-bar-item w3-button"><span class="fa fa-truck"></span> Egresos</a>
 
 
             <a href="/logout" class="w3-bar-item w3-right"><span class="fa fa-sign-out"></span> Cerrar sesión</a>
@@ -74,17 +76,17 @@
                     <li class="w3-padding-16" w3-repeat="clientes">
                         <span onclick="eliminarCliente({{cedula}})" 
                               class="w3-button w3-white w3-xlarge w3-right"><button  class=" w3-button   "><span class="fa fa-trash-o"></span></button></span>
-                              <img src="../images/client.png" class="w3-left w3-circle w3-margin-right" style="width:50px">
+                        <img src="../images/client.png" class="w3-left w3-circle w3-margin-right" style="width:50px">
                         <span class="w3-large">{{nombre}} {{apellido}}</span><br>
                         <span> <strong>Cédula: </strong>{{cedula}}<br></span>
                         <span> <strong>Teléfonos : </strong>{{domicilio}} - {{celular}}<br></span>
                         <span> <strong>Correo : </strong><a href="mailto:{{correo}}">{{correo}}</a><br></span>
-                        
+
                     </li>
 
                 </ul>
 
-             
+
 
 
             </div>
@@ -132,6 +134,7 @@
 
                         <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Guardar</button>
 
+
                     </div>
                 </form>
 
@@ -154,10 +157,10 @@
 
 
                         function w3_open() {
-                            document.getElementById("mySidebar").style.display = "block";
+                        document.getElementById("mySidebar").style.display = "block";
                         }
                         function w3_close() {
-                            document.getElementById("mySidebar").style.display = "none";
+                        document.getElementById("mySidebar").style.display = "none";
                         }
         </script>
 

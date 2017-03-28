@@ -31,6 +31,8 @@ router.get('/login', function (req, res) {
 
 
 
+
+
 router.get('/logout', function (req, res) {
     req.session.destroy(function (err) {
         if (err) {
@@ -50,6 +52,10 @@ router.get('/cliente', isLoggedIn, function (req, res, next) {
 });
 router.get('/inventario', isLoggedIn, function (req, res, next) {
     res.render('inventario', {usuario: sess.usuarioDatos});
+});
+
+router.get('/ingresos', isLoggedIn, function (req, res, next) {
+    res.render('ingreso', {usuario: sess.usuarioDatos});
 });
 
 router.get('/prueba', isLoggedIn, function (req, res, next) {

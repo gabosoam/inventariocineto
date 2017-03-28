@@ -135,7 +135,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                     if (error) {
                         callback('error en la consulta: ' + error, null);
                     } else {
-                        callback(null, results);
+                        callback(null,{productos:results});
                         connection.release();//Da por finalizado la consulta
                     }
                 });

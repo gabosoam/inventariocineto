@@ -19,13 +19,13 @@
 
         <div class="topnav" id="myTopnav">
 
-
             <a href="/home" class="w3-bar-item w3-button "><span class="fa fa-home"></span> Inventario</a>
             <a href="/cliente" class="w3-bar-item w3-button"><span class="fa fa-address-book"></span> Clientes</a>
             <a href="#" class="w3-bar-item w3-button"><span class="fa fa-wrench"></span> Técnicos</a>
             <a href="/inventario" class="w3-bar-item w3-button"><span class="fa fa-th-large"></span> Inventario</a>
             <a href="/ingresos" class="w3-bar-item w3-button"><span class="fa fa-shopping-cart"></span> Ingresos</a>
             <a href="/ingresos" class="w3-bar-item w3-button"><span class="fa fa-truck"></span> Egresos</a>
+
 
             <a href="/logout" class="w3-bar-item w3-right"><span class="fa fa-sign-out"></span> Cerrar sesión</a>
             <a href="#" class="w3-bar-item w3-right"><span class="fa fa-user"></span> <%-usuario.nombres_usuario%></a>
@@ -37,7 +37,7 @@
 
             <div class="">
 
-                <button onclick="document.getElementById('modalNuevo').style.display = 'block'" class=" w3-bar-item w3-button w3-red  w3-circle w3-btn w3-left  "><span class="fa fa-plus"></span></button>
+
                 <button onclick="buscar();" class="w3-bar-item w3-button w3-blue w3-right"><span class="fa fa-search"></span></button>
                 <input id="txtBuscar" type="text" class="w3-bar-item w3-input w3-white w3-right  " placeholder="Buscar productos..">
 
@@ -48,62 +48,72 @@
 
 
 
-        <div class="w3-sidebar w3-bar-block w3-collapse w3-card-4 w3-animate-left w3-dark-grey w3-mobile" style="width:200px;" id="mySidebar">
-
-            <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Cerrar &times;</button>
 
 
-            <label class="w3-bar-item">Filtros:</label>
-            <label class="w3-bar-item">Por categoría</label>
-            <select id="cbxCategoria" class="w3-bar-item">
-                <option>Seleccionar categoria...</option>
-                <option w3-repeat="resultados">{{label}}</option>
-            </select>
-            <label class="w3-bar-item">Por marca</label>
+        <div class="w3-main w3-mobile w3-padding" >
 
-            <select id="cbxMarca" class="w3-bar-item">
-                <option>Seleccionar marca...</option>
-                <option w3-repeat="resultados">{{label}}</option>
-            </select>
-
-            <label class="w3-bar-item">Por almacen</label>
-
-            <select id="cbxAlmacen" class="w3-bar-item">
-                <option>Seleccionar almacen...</option>
-                <option w3-repeat="resultados">
-                    {{label}}
-                </option>
-            </select>
+            <div class="w3-container w3-card-4 w3-light-grey">
+                <div class="w3-container ">
+                    
+                    <div class="w3">
+                        
+                    </div>
 
 
-        </div>
+                    <p><label>Proveedor</label>
+                        <select class="w3-select">
+                            <option>Seleccionar proveedor</option>
+                        </select>
+                    </p>
 
+                    <p><label>Fecha de ingreso</label>
+                        <input class="w3-input w3-border" name="last" type="date"></p>
+                    <p><label>Tipo documento</label>
+                        <select class="w3-select">
+                            <option>Seleccionar tipo de documento</option>
+                        </select></p>
+                    <p><label>Número de documento</label>
+                        <input class="w3-input w3-border" name="last" type="text" placeholder="Ingrese el número de documento"></p>
+                    <button onclick="agregar()" class="w3-padding w3-button w3-blue w3-right">Agregar artículo</button>
+                </div>
+                <table id="tabla" class="w3-table-all">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>No. de serie</th>
+                            <th>Producto</th>
 
-        <div class="w3-main w3-mobile" style="margin-left:200px">
-
-            <div class="w3-dark-grey">
-                <button class="w3-button w3-dark-grey w3-xlarge w3-hide-large" onclick="w3_open()">&#9776; <span class="fa fa-filter"></span></button>
-
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1321231321</td>
+                            <td>1321231321</td>
+                            <td>1321231321</td>
+                        </tr>
+                        <tr>
+                            <td>1321231321</td>
+                            <td>1321231321</td>
+                            <td>1321231321</td>
+                        </tr>
+                        <tr>
+                            <td>1321231321</td>
+                            <td>1321231321</td>
+                            <td>1321231321</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="w3-teal w3-container">
+                    <p>Footer</p>
+                </footer>
 
             </div>
-            <div class="w3-container">
-                <h4 id="mensaje"></h4>
-                <ul id="listaProductos" class="w3-ul w3-card-4">
-                    <li class="w3-padding-16" w3-repeat="productos">
-                        <span onclick="eliminarCliente({{codigo}})" 
-                              class="w3-button w3-white w3-xlarge w3-right"><button  class=" w3-button   "><span class="fa fa-trash-o"></span></button></span>
-                        <img src="../images/box2.png" class="w3-left w3-circle w3-margin-right" style="width:50px">
-                        <span class="w3-large">{{nombre}}</span><br>
-                        <span> <strong>Código: </strong>{{codigo}}<br></span>
-                        <span> <strong>Marca: </strong>{{marca}}<br></span>
-                        <span> <strong>Categoría: </strong>{{categoria}}<br></span>
-                        <span> <strong>Cantidad: </strong>{{cantidad}}<br></span>
 
 
-                    </li>
 
-                </ul>
-            </div>
+
+
+
         </div>
 
         <div id="modalNuevo" class="w3-modal ">
@@ -229,9 +239,7 @@
 
         <script src="../jquery-2.1.1.js" type="text/javascript"></script>
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-        <script src="../javascripts/gestionProducto.js" type="text/javascript"></script>
-
-
+        <script src="../javascripts/gestionIngreso.js" type="text/javascript"></script>
 
 
 
@@ -245,8 +253,19 @@
         </script>
 
         <script>
-            var a = usuario.nombres_usuario;
-            alert(a);
+            function openCity(evt, cityName) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("city");
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " w3-red";
+            }
         </script>
 
 
