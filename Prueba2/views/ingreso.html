@@ -54,27 +54,29 @@
 
             <div class="w3-container w3-card-4 w3-light-grey">
                 <div class="w3-container ">
-                    
-                    <div class="w3">
-                        
+
+                    <div class="w3-row">
+                        <div class="w3-col s12 m12 l6">
+                            <p><label>Proveedor</label>
+                                <select class="w3-select">
+                                    <option>Seleccionar proveedor</option>
+                                </select>
+                            </p>
+
+                            <p><label>Fecha de ingreso</label>
+                                <input class="w3-input w3-border" name="last" type="date"></p>
+                            <p><label>Tipo documento</label>
+                                <select class="w3-select">
+                                    <option>Seleccionar tipo de documento</option>
+                                </select></p>
+                            <p><label>Número de documento</label>
+                                <input class="w3-input w3-border" name="last" type="text" placeholder="Ingrese el número de documento"></p>
+                        </div>
                     </div>
 
 
-                    <p><label>Proveedor</label>
-                        <select class="w3-select">
-                            <option>Seleccionar proveedor</option>
-                        </select>
-                    </p>
 
-                    <p><label>Fecha de ingreso</label>
-                        <input class="w3-input w3-border" name="last" type="date"></p>
-                    <p><label>Tipo documento</label>
-                        <select class="w3-select">
-                            <option>Seleccionar tipo de documento</option>
-                        </select></p>
-                    <p><label>Número de documento</label>
-                        <input class="w3-input w3-border" name="last" type="text" placeholder="Ingrese el número de documento"></p>
-                    <button onclick="agregar()" class="w3-padding w3-button w3-blue w3-right">Agregar artículo</button>
+                    <button onclick="document.getElementById('modalNuevo').style.display = 'block'" class="w3-padding w3-button w3-blue w3-right">Agregar artículo</button>
                 </div>
                 <table id="tabla" class="w3-table-all">
                     <thead>
@@ -120,51 +122,34 @@
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
                 <header class="w3-container w3-dark-grey"> 
+
                     <span onclick="document.getElementById('modalNuevo').style.display = 'none'" 
                           class="w3-button w3-display-topright">&times;</span>
-                    <h2>Nuevo producto</h2>
+                    <h3>
+                        Añadir producto
+                    </h3>
+
                 </header>
-
-                <form class="w3-container"  method="post" action="/modelo/nuevoProducto">
-                    <div class="w3-section">
-                        <div class="w3-row">
-                            <div class="w3-col s12 m12 l12 w3-padding">
-
-                                <input class="w3-input w3-mobile" type="text" placeholder="Ingresar código" name="codigo" required>                                          
-                                <input class="w3-input" type="text" placeholder="Ingresar nombre del producto" name="nombre" required>
-
-                                <select id="cbxCategoria2" class="w3-select"   name="categoria" requir                                        ed>
-                                    <option>Seleccionar categoría...</option>
-                                    <option w3-repeat="resultados">
-                                        {{label}}
-                                    </option>
-                                </select>
-                                <select id="cbxMarca2" class="w3-select"   name="marca" required>
-                                    <option>Seleccionar marca...</option>
-                                    <option w3-repeat="resultados">
-                                        {{label}}
-                                    </option>
-                                </select>
-
-
-
-
-                            </div>
-
-
-
-                        </div>
-
-
-                        <button onclick="document.getElementById('modalNuevo').style.display = 'none'" class="w3-button  w3-red w3-right w3-section w3-padding" >Cancelar</button>
-                        <button class="w3-button  w3-blue w3-right w3-section w3-padding" type="submit">Guardar</button>
-
-                    </div>
-                </form>
-
-
+             
+                <table class="w3-table-all" id="tblProductos">
+                    <thead>
+                        <tr class="w3-red">
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr w3-repeat="productos">
+                            <td>{{codigo}}</td>
+                            <td>{{nombre}}</td>
+                            <td><button class="w3-button w3-red" onclick="agregar({{Country}})">Agregar</button> </td>
+                        </tr>
+                    </tbody>
+                </table>
 
             </div>
+
         </div>
 
         <div id="id01" class="w3-modal">
@@ -245,26 +230,26 @@
 
         <script>
                             function w3_open() {
-                            document.getElementById("mySidebar").style.display = "block";
+                                document.getElementById("mySidebar").style.display = "block";
                             }
                             function w3_close() {
-                            document.getElementById("mySidebar").style.display = "none";
+                                document.getElementById("mySidebar").style.display = "none";
                             }
         </script>
 
         <script>
             function openCity(evt, cityName) {
-            var i, x, tablinks;
-            x = document.getElementsByClassName("city");
-            for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < x.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " w3-red";
+                var i, x, tablinks;
+                x = document.getElementsByClassName("city");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablink");
+                for (i = 0; i < x.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " w3-red";
             }
         </script>
 

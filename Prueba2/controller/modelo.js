@@ -265,6 +265,37 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
+    
+        insertArticulo: function (datos, callback) {//la variable datos contiene todo lo que se va a insertar en formato json
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(err, null)
+            } else {
+                connection.query("call sp_articulo("
+                        + "'" + datos.serie + "',"
+                        + "'" + datos.codigo + "',"
+                        + "'" + datos.observacion + "',"
+                        + "" + datos.meses + ","
+                        + "" + datos.anio + ","
+                        + "" + datos.peso + ","
+                        + "'" + datos.fecha + "',"
+                        + "'" + datos.ubicacion + "',"
+                        + "'" + datos.proveedor + "'"
+                        + ")", datos, function (error, results, rows) {
+
+                            if (error) {
+                                callback('error en la insercion: ' + error, null);
+                            } else {
+                                console.log('rows: ' + rows[0].mensaje);
+
+                                callback(null, (results.affectedRows));
+                                //indica el numero de filas afectadas
+                                connection.release();
+                            }
+                        });
+            }
+        });
+    },
 
     eliminar: function (cedula, callback) {//elimina una fila
         iniciar.getConnection(function (err, connection) {

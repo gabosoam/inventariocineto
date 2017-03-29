@@ -1,4 +1,15 @@
 
+function abrirModal(codigo) {
+
+    var myObject = {
+        codigo: codigo
+    };
+    w3.displayObject("lblCodigo", myObject);
+    w3.displayObject("txtCodigo", myObject);
+    document.getElementById('modalAnadir').style.display = 'block'
+
+}
+
 var socket = io.connect();
 
 function cargarUbicacion() {
@@ -68,18 +79,23 @@ function cargarCategoria() {
 
 function cargarMarca() {
 
+
+
     socket.emit('Cargar marca', function (marcas) {
 
 
         w3.displayObject("cbxMarca", marcas);
         w3.displayObject("cbxMarca2", marcas);
         $('#cbxMarca').on('change', function () {
+
+
             var marca = $(this).val();
 
             if (marca) {
 
 
                 cargarTablaMarca(marca);
+
             } else {
                 console.log("Seleccione categoria");
             }
@@ -94,7 +110,8 @@ function cargarAlmacen() {
 
 
         w3.displayObject("cbxAlmacen", marcas);
-        $('#cbxAlmacen').on('change', function () {
+        w3.displayObject("cbxAlmacen2", marcas);
+            alert(marcas);    $('#cbxAlmacen').on('change', function () {
             var almacen = $(this).val();
 
             if (almacen) {
@@ -108,6 +125,16 @@ function cargarAlmacen() {
 
     });
 
+
+}
+;
+
+function cargarProveedor() {
+
+    socket.emit('Cargar proveedor', function (proovedores) {
+
+        w3.displayObject("cbxProveedor", proovedores);
+    });
 
 }
 ;
@@ -214,23 +241,27 @@ function buscar() {
     var terminoBusqueda = $("#txtBuscar").val();
     if (terminoBusqueda === '') {
     } else {
+        document.getElementById('modalCargando').style.display = 'block';
         socket.emit('Busqueda global', terminoBusqueda.toLowerCase(), function (productos) {
             $('#mensaje').text(productos.productos.length + ' registros encontrados de busqueda: ' + terminoBusqueda);
             w3.displayObject("listaProductos", productos);
             if (productos.productos.length > 0) {
                 w3.show('#listaProductos');
             }
+            document.getElementById('modalCargando').style.display = 'none';
         });
     }
 }
 
 function cargarTablaCategoria(categoria) {
+    document.getElementById('modalCargando').style.display = 'block';
     socket.emit('Productos', categoria, function (productos) {
         $('#mensaje').text(productos.productos.length + ' registros encontrados de categoría: ' + categoria);
         w3.displayObject("listaProductos", productos);
         if (productos.productos.length > 0) {
             w3.show('#listaProductos');
         }
+        document.getElementById('modalCargando').style.display = 'none';
     });
     w3_close();
 
@@ -238,26 +269,66 @@ function cargarTablaCategoria(categoria) {
 ;
 
 function cargarTablaAlmacen(almacen) {
+
+    document.getElementById('modalCargando').style.display = 'block';
     socket.emit('Cargar tabla ubicacion', almacen, function (productos) {
         $('#mensaje').text(productos.productos.length + ' registros encontrados en almacen: ' + almacen);
         w3.displayObject("listaProductos", productos);
         if (productos.productos.length > 0) {
             w3.show('#listaProductos');
         }
+        document.getElementById('modalCargando').style.display = 'none';
     });
     w3_close();
 
 }
 
 function cargarTablaMarca(almacen) {
+    document.getElementById('modalCargando').style.display = 'block';
+
     socket.emit('Cargar tabla marca', almacen, function (productos) {
         $('#mensaje').text(productos.productos.length + ' registros encontrados en marca: ' + almacen);
         w3.displayObject("listaProductos", productos);
         if (productos.productos.length > 0) {
             w3.show('#listaProductos');
         }
+        document.getElementById('modalCargando').style.display = 'none'
     });
+
     w3_close();
+
+}
+
+function guardarArticulo() {
+  
+    
+    var datos = {
+        serie: document.getElementById("txtSerie").value,
+        codigo: $('#lblCodigo').text(),
+        meses: document.getElementById("txtMeses").value,
+        anio: document.getElementById("txtAnio").value,
+        observacion : document.getElementById("txtObservacion").value,
+
+        peso: document.getElementById("txtPeso").value,
+        fecha: document.getElementById("txtFecha").value,
+        ubicacion: document.getElementById("cbxAlmacen2").value,
+        proveedor: document.getElementById("txtProveedor").value
+    };
+    
+    alert(datos.ubicacion);
+    
+   
+    
+//    socket.emit('Guardar articulo', datos, function (rows) {
+//      
+//    });
+    
+
+    
+ 
+
+
+
 
 }
 
@@ -265,6 +336,8 @@ function cargarTablaMarca(almacen) {
 
 
 $(document).ready(function () {
+
+
     w3.hide('#listaProductos')
     $('#txtBuscar').keypress(function (e) {
         if (e.keyCode == 13)
@@ -275,6 +348,7 @@ $(document).ready(function () {
     cargarCategoria();
     cargarMarca();
     cargarAlmacen();
+    cargarProveedor();
 
 
 });

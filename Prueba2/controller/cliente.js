@@ -109,12 +109,14 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                         + "'" + datos.pais + "',"
                         + "'" + datos.ciudad + "',"
                         + "'" + datos.direccion + "'"
-                        + ")", datos, function (error, results,rows) {
+                        + ")", datos, function (error, results,rows, mensaje) {
 
                             if (error) {
                                 callback('error en la insercion: ' + error, null);
                             } else {
+                                console.log('LOS ROOOOOWS SON'+rows[0]);
                                 console.log('rows: '+rows[0].mensaje);
+                                console.log('rows: '+mensaje);
                            
                                 callback(null, (results.affectedRows));
                                 //indica el numero de filas afectadas

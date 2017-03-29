@@ -92,7 +92,9 @@
                     <li class="w3-padding-16" w3-repeat="productos">
                         <span onclick="eliminarCliente({{codigo}})" 
                               class="w3-button w3-white w3-xlarge w3-right"><button  class=" w3-button   "><span class="fa fa-trash-o"></span></button></span>
-                        <img src="../images/box2.png" class="w3-left w3-circle w3-margin-right" style="width:50px">
+                        <span onclick="abrirModal('{{codigo}}')" 
+                              class="w3-button w3-white w3-xlarge w3-right"><button  class=" w3-button   "><span class="fa fa-shopping-cart"></span></button></span>
+                        <img src="../images/box2.png" class="w3-left  w3-margin-right" style="width:50px">
                         <span class="w3-large">{{nombre}}</span><br>
                         <span> <strong>Código: </strong>{{codigo}}<br></span>
                         <span> <strong>Marca: </strong>{{marca}}<br></span>
@@ -123,7 +125,7 @@
                                 <input class="w3-input w3-mobile" type="text" placeholder="Ingresar código" name="codigo" required>                                          
                                 <input class="w3-input" type="text" placeholder="Ingresar nombre del producto" name="nombre" required>
 
-                                <select id="cbxCategoria2" class="w3-select"   name="categoria" requir                                        ed>
+                                <select id="cbxCategoria2" class="w3-select w3-border"   name="categoria" requir                                        ed>
                                     <option>Seleccionar categoría...</option>
                                     <option w3-repeat="resultados">
                                         {{label}}
@@ -157,6 +159,86 @@
             </div>
         </div>
 
+        <div id="modalCargando" class="w3-modal ">
+
+            <div class="w3-modal-content  w3-animate-zoom w3-black w3-center" style="max-width:85px">
+
+                <i class="w3-text-red fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                <span class="w3-text-white" >Cargando...</span>
+
+
+            </div>
+        </div>
+
+        <div id="modalAnadir" class="w3-modal ">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+                <header class="w3-container w3-dark-grey"> 
+                    <span onclick="document.getElementById('modalAnadir').style.display = 'none'" 
+                          class="w3-button w3-display-topright">&times;</span>
+                    <h2>Agregar existencia</h2>
+                    <p id="lblCodigo">Codigo: {{codigo}}</p>
+                </header>
+
+                
+                    <input type="hidden" id="txtCodigo" value='{{codigo}}'>
+                    <div class="w3-section">
+                        <div class="w3-row">
+                            <div class="w3-col s12 m12 l4 w3-padding">
+
+                                <p>Número de serie
+                                    <input type="text" id="txtSerie" placeholder="Número de serie" class="w3-input w3-border" required></p>
+
+                                <p>Meses de garantía
+                                    <input type="number" id="txtMeses" placeholder="Meses de garantía" class="w3-input w3-border" required></p>
+                                <p>Año de fabricación
+                                    <input type="number" id="txtAnio" placeholder="Año de fabricación" class="w3-input w3-border" required></p>
+
+                            </div>
+                            <div class="w3-col s12 m12 l4 w3-padding">
+                                <p>Peso neto
+                                    <input type="number" id="txtPeso" placeholder="Peso neto" class="w3-input w3-border" required></p>
+                                <p>Fecha de ingreso
+                                    <input type="date" id="txtFecha" placeholder="Fecha de ingreso" class="w3-input w3-border" required></p>
+                                <p>Almacén
+                                    <select id="cbxAlmacen2" class="w3-select">
+                                        <option value="" disabled selected >Seleccionar almacen...</option>
+                                        <option w3-repeat="resultados">
+                                            {{label}}
+                                        </option>
+                                    </select>
+
+                            </div>
+                            <div class="w3-col s12 m12 l4 w3-padding">
+                                <p>Proveedor
+                                    <select id="txtProveedor"  class="w3-select w3-border" required>
+                                        <option value="" disabled selected>Seleccionar proveedor</option>
+                                        <option w3-repeat="resultados">
+                                            {{proveedor}}
+                                        </option>
+                                    </select></p>
+                          
+                                <p>Descripción
+                                    <input id="txtObservacion" type="text" placeholder="Descripción" class="w3-input w3-border" required></p>
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+                        <button onclick="document.getElementById('modalAnadir').style.display = 'none'" class="w3-button  w3-red w3-right w3-section w3-padding" >Cancelar</button>
+                        <button class="w3-button  w3-blue w3-right w3-section w3-padding" onclick="guardarArticulo()">Guardar</button>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-animate-top w3-card-4">
                 <header class="w3-container w3-teal"> 
@@ -244,10 +326,7 @@
                             }
         </script>
 
-        <script>
-            var a = usuario.nombres_usuario;
-            alert(a);
-        </script>
+       
 
 
 

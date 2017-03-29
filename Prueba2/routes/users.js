@@ -72,6 +72,22 @@ router.io.on('connection', function (socket) {
 
     });
 
+    socket.on('Guardar articulo', function (datos, callback) {
+
+      alert(datos);
+        
+        controllerModelo.insertArticulo(datos, function (error, body) {//envio los datos a insertar dentro de la funcion insert
+            if (error) {
+                console.log(error);
+                callback(0);
+
+            } else {
+             callback(body);
+            }
+        });
+
+    });
+
     socket.on('Productos', function (categoria, callback) {
 
         controllerModelo.getTabla(categoria, function (error, productos) {
@@ -86,8 +102,8 @@ router.io.on('connection', function (socket) {
         });
 
     });
-    
-      socket.on('Cargar tabla ubicacion', function (almacen, callback) {
+
+    socket.on('Cargar tabla ubicacion', function (almacen, callback) {
 
         controllerModelo.getUbicacion(almacen, function (error, productos) {
             if (error) {
@@ -101,8 +117,8 @@ router.io.on('connection', function (socket) {
         });
 
     });
-    
-     socket.on('Cargar tabla marca', function (marca, callback) {
+
+    socket.on('Cargar tabla marca', function (marca, callback) {
 
         controllerModelo.getTablaMarca(marca, function (error, productos) {
             if (error) {
@@ -164,7 +180,7 @@ router.io.on('connection', function (socket) {
     });
 
     socket.on('Detalle', function (codigo, callback) {
-        console.log('EL CODIGO ES:'+ codigo);
+        console.log('EL CODIGO ES:' + codigo);
 
         controllerModelo.getDetalle(codigo, function (error, productos) {
             if (error) {
@@ -234,6 +250,36 @@ router.io.on('connection', function (socket) {
             } else {
 
                 callback(productos);
+            }
+        });
+
+    });
+
+    socket.on('Cargar almacen', function (callback) {
+
+        controllerModelo.getAllTabla('v_ubicacion', function (error, productos) {
+            if (error) {
+
+                callback();
+
+            } else {
+
+                callback(productos);
+            }
+        });
+
+    });
+
+    socket.on('Cargar proveedor', function (callback) {
+
+        controllerModelo.getAllTabla('v_proveedor', function (error, marcas) {
+            if (error) {
+
+                callback();
+
+            } else {
+
+                callback(marcas);
             }
         });
 
