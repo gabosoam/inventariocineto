@@ -53,6 +53,12 @@ router.get('/cliente', isLoggedIn, function (req, res, next) {
 router.get('/inventario', isLoggedIn, function (req, res, next) {
     res.render('inventario', {usuario: sess.usuarioDatos});
 });
+router.get('/contrato', isLoggedIn, function (req, res, next) {
+    res.render('contrato', {usuario: sess.usuarioDatos});
+});
+router.get('/acta', isLoggedIn, function (req, res, next) {
+    res.render('acta', {usuario: sess.usuarioDatos});
+});
 
 router.get('/ingresos', isLoggedIn, function (req, res, next) {
     res.render('ingreso', {usuario: sess.usuarioDatos});
@@ -75,32 +81,7 @@ router.get('/release', isLoggedIn, function (req, res, next) {
 });
 
 router.get('/admin', isLoggedIn, function (req, res, next) {
-    controllerModelo.getCategoria(function (error, categorias) {
-        if (error) {
-            console.log('ocurrio un error: ', error);//muestra el error por consola
-        } else {
-            controllerModelo.getUbicacion(function (error, ubicacion) {
-                if (error) {
-                    console.log('ocurrio un error: ', error);//muestra el error por consola
-                } else {
-
-                    controllerModelo.getUsuarios(function (error, usuarios) {
-                        if (error) {
-                            console.log('ocurrio un error: ', error);//muestra el error por consola
-                        } else {
-
-                            res.render('admin.html', {usuario: sess.usuarioDatos, title: 'Hola gabo', categoria: categorias, ubicacion: ubicacion, usuario: usuarios});
-                        }
-                    });
-
-
-                }
-            });
-
-
-        }
-    });
-
+    res.render('admin', {usuario: sess.usuarioDatos});
 });
 
 router.post('/loginPass', function (req, res) {

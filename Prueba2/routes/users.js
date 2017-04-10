@@ -3,6 +3,8 @@ var router = express.Router();
 router.io = require('socket.io')();
 var controllerModelo = require('../controller/modelo.js');
 var controllerCliente = require('../controller/cliente.js');
+var controllerContrato = require('../controller/contrato.js');
+var controllerActa = require('../controller/acta.js');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -33,6 +35,57 @@ router.io.on('connection', function (socket) {
             } else {
                 //console.log(levels);
                 callback(clientes);
+            }
+        });
+    });
+
+    socket.on('Cargar contratos', function (callback) {
+        controllerContrato.getTabla(function (err, clientes) {
+            console.log(clientes);
+            if (err) {
+                console.log("Ocurrio un error", err);
+                callback("");
+            } else {
+                //console.log(levels);
+                callback(clientes);
+            }
+        });
+    });
+    socket.on('Cargar eventos', function (callback) {
+        controllerModelo.getAllTabla('v_evento',function (err, clientes) {
+            console.log(clientes);
+            if (err) {
+                console.log("Ocurrio un error", err);
+                callback("");
+            } else {
+                //console.log(levels);
+                callback(clientes);
+            }
+        });
+    });
+
+    socket.on('Cargar contratos', function (callback) {
+        controllerContrato.getTabla(function (err, clientes) {
+            console.log(clientes);
+            if (err) {
+                console.log("Ocurrio un error", err);
+                callback("");
+            } else {
+                //console.log(levels);
+                callback(clientes);
+            }
+        });
+    });
+
+    socket.on('Cargar actas', function (callback) {
+        controllerActa.getTabla(function (err, actas) {
+            console.log(actas);
+            if (err) {
+                console.log("Ocurrio un error", err);
+                callback("");
+            } else {
+                //console.log(levels);
+                callback(actas);
             }
         });
     });
@@ -73,16 +126,48 @@ router.io.on('connection', function (socket) {
     });
 
     socket.on('Guardar articulo', function (datos, callback) {
+        console.log('   LOS DATOS SOOOON: ' + datos);
 
-      alert(datos);
-        
+
         controllerModelo.insertArticulo(datos, function (error, body) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
                 console.log(error);
                 callback(0);
 
             } else {
-             callback(body);
+                callback(body);
+            }
+        });
+
+    });
+
+    socket.on('Guardar contrato', function (datos, callback) {
+        console.log('   LOS DATOS SOOOON: ' + datos);
+
+
+        controllerContrato.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
+            if (error) {
+                console.log(error);
+                callback(error);
+
+            } else {
+                callback(mensaje);
+            }
+        });
+
+    });
+
+    socket.on('Guardar cliente', function (datos, callback) {
+        console.log('   LOS DATOS SOOOON: ' + datos);
+
+
+        controllerCliente.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
+            if (error) {
+                console.log(error);
+                callback(error);
+
+            } else {
+                callback(mensaje);
             }
         });
 
@@ -228,6 +313,21 @@ router.io.on('connection', function (socket) {
     socket.on('Cargar categoria', function (callback) {
 
         controllerModelo.getAllTabla('v_categoria', function (error, productos) {
+            if (error) {
+
+                callback();
+
+            } else {
+
+                callback(productos);
+            }
+        });
+
+    });
+
+    socket.on('Cargar categoria chart', function (callback) {
+
+        controllerModelo.getAllTablaChart('v_categoriaChart', function (error, productos) {
             if (error) {
 
                 callback();

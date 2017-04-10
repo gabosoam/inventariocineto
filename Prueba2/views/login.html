@@ -29,7 +29,7 @@
 
 
         <div class="  middle-box "  >
-            <div class="w3-white w3-container w3-padding w3-card " style="margin-top: 100px" >   
+            <div class="w3-white w3-container w3-padding w3-card" style="margin-top: 100px" >
                 <%if(error){%>
                 <div class="w3-panel w3-red w3-display-container">
                     <span onclick="this.parentElement.style.display = 'none'"
@@ -46,49 +46,22 @@
 
                 <form action="/loginPass" method="post">
                     <div class="w3-padding">
-                        <label>Inica sesión para continuar</label>
-                        <input name="nombre_usuario" class="w3-input" type="text" placeholder="Ingrese su nombre de usuario" required>
+                
+                        <input name="nombre_usuario" class="w3-input w3-border" type="text" placeholder="Nombre de usuario" required>
 
-                        <input name="password_usuario" class="w3-input" type="password" placeholder="Ingrese su contraseña" required>
+                        <input name="password_usuario" class="w3-input w3-border w3-margin-top" type="password" placeholder="Contraseña" required>
                     </div>
 
 
-                    <input  type="submit" class="  w3-input w3-blue " value="Ingresar al sistema" >
+                    <input  type="submit" class="  w3-input w3-teal " value="Ingresar al sistema" >
 
 
                 </form>
-
-
-
-
-
-
-
-
 
             </div>
 
 
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     </body>

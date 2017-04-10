@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var controllerModelo = require('../controller/modelo.js');
-
+var controllerContrato = require('../controller/contrato')
 
 
 function isLoggedIn(req, res, next) {
@@ -48,6 +48,27 @@ router.post('/nuevoProducto', isLoggedIn, function (req, res) {
         }
     });
 });
+
+router.post('/nuevoContrato', isLoggedIn, function (req, res) {
+    var datos = {// variable json que captura los valores de los input que estan en el html para eso los input deven tener el atributo name
+        id: req.body.id,
+        inicio: req.body.inicio,
+        final: req.body.final,
+        descripcion: req.body.descripcion,
+        cliente: req.body.cliente
+
+    };
+    console.log('los datos a insertar son: ', datos);
+    controllerContrato.insert(datos, function (error, body) {//envio los datos a insertar dentro de la funcion insert
+        if (error) {
+            res.send(error);
+
+        } else {
+             res.redirect('/inventario');
+        }
+    });
+});
+
 
 router.post('/ingreso', isLoggedIn, function (req, res) {
      console.log('OLIS   ');

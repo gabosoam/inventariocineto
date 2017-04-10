@@ -1,3 +1,16 @@
+var json;
+
+function imprimir() {
+
+    if (json.length == 0) {
+
+
+    } else {
+        JSONToCSVConvertor(json, "Reporte", true);
+    }
+
+
+}
 
 function abrirModal(codigo) {
 
@@ -111,7 +124,7 @@ function cargarAlmacen() {
 
         w3.displayObject("cbxAlmacen", marcas);
         w3.displayObject("cbxAlmacen2", marcas);
-            alert(marcas);    $('#cbxAlmacen').on('change', function () {
+        $('#cbxAlmacen').on('change', function () {
             var almacen = $(this).val();
 
             if (almacen) {
@@ -133,7 +146,7 @@ function cargarProveedor() {
 
     socket.emit('Cargar proveedor', function (proovedores) {
 
-        w3.displayObject("cbxProveedor", proovedores);
+        w3.displayObject("txtProveedor", proovedores);
     });
 
 }
@@ -148,60 +161,10 @@ function cargarTablaDetalle(codigo) {
 
 
     socket.emit('Detalle', codigo, function (productos) {
-        $('#txtCod').text(productos[0].codigo);
-        $('#txtNombre').text('Nombre:' + productos[0].nombre);
-        $('#txtCategoria').text(productos[0].categoria);
-        $('#txtMarca').text(productos[0].marca);
-        $('#txtCantidad').text(productos.length);
-
-
-        var thead = '<thead><tr><th>Producto</th><th>Acciones</th></tr></thead>';
-        var data = '<tbody>',
-                cb = $('#tablaDetalle');
-        for (var i = 0; i < productos.length; i++) {
-            var fecha = productos[i].fecha;
-            var serie = productos[i].serie;
-            var categoria = productos[i].categoria;
-            var ubicacion = productos[i].ubicacion;
-            var cantidad = productos[i].cantidad;
-
-
-            var acciones = '<a onclick="eliminarCliente(' + productos[i].codigo + ')"  data-toggle="tooltip" title="Eliminar!" class="btn btn-danger  btn-outline" ><span class="fa fa-truck fa-lg"></span> Registrar salida</a>';
-            data += '<tr>\n\
-                        <td> \n\
-                        <strong>Número de serie: </strong>' + serie + '<br>\
-                        <strong>Fecha de ingreso: </strong>' + fecha + '<br>\
-                        <strong>Ubicación: </strong>' + ubicacion + '<br>\
-                        </td\n\
-                        >\n\
-                        <td>' + acciones + '</td>\n\
-                    </tr>';
-        }
-
-        $('#txtCodigo').val(productos[0].codigo);
-        $('#categoria').val(productos[0].categoria);
-        $('#txtNombre').val(productos[0].nombre);
-        $('#txtCantidad').val(productos.length);
-        $('#txtTitulo').text(productos[0].nombre);
-        $('#txtNombre').text(productos[0].nombre);
-
-        cb.html(thead + data + '</tbody>');
-
-        $(cb).dataTable({
-            destroy: true,
-            responsive: true,
-            "oLanguage": {
-                "sLengthMenu": "Abrir _MENU_ Elementos",
-                "sSearch": "Buscar: ",
-                "sZeroRecords": "Ningún elemento encontrado",
-                "sNextButton": "Siguiente",
-                "sInfo": "Registros del _START_ al _END_ de _TOTAL_ registros",
-                "sPrevious": "Anterior",
-                "sInfoFiltered": "(filtrado de _MAX_  registros)",
-            }
-
-        });
-        document.getElementById('btnNuevo').style.visibility = "visible";
+        w3.displayObject("listaDetalle", productos);
+        w3.displayObject("lblCodigo", productos);
+        $('#lblCodigo').text('hola');
+        document.getElementById('modalVer').style.display = 'block';
 
     });
 
@@ -241,27 +204,39 @@ function buscar() {
     var terminoBusqueda = $("#txtBuscar").val();
     if (terminoBusqueda === '') {
     } else {
-        document.getElementById('modalCargando').style.display = 'block';
-        socket.emit('Busqueda global', terminoBusqueda.toLowerCase(), function (productos) {
-            $('#mensaje').text(productos.productos.length + ' registros encontrados de busqueda: ' + terminoBusqueda);
-            w3.displayObject("listaProductos", productos);
-            if (productos.productos.length > 0) {
-                w3.show('#listaProductos');
-            }
-            document.getElementById('modalCargando').style.display = 'none';
-        });
+        cargarTabla(terminoBusqueda);
+
     }
 }
 
+function cargarTabla(terminoBusqueda) {
+    w3.removeClass('#cargando', 'w3-hide');
+    socket.emit('Busqueda global', terminoBusqueda.toLowerCase(), function (productos) {
+        $('#mensaje').text(productos.productos.length + ' registros encontrados de busqueda: ' + terminoBusqueda);
+        w3.displayObject("listaProductos", productos);
+        json = productos.productos;
+        if (productos.productos.length > 0) {
+            w3.removeClass('#listaProductos', 'w3-hide')
+        }
+        w3.addClass('#cargando', 'w3-hide');
+    });
+}
+
 function cargarTablaCategoria(categoria) {
-    document.getElementById('modalCargando').style.display = 'block';
+    w3.removeClass('#cargando', 'w3-hide');
     socket.emit('Productos', categoria, function (productos) {
+        json = productos.productos;
         $('#mensaje').text(productos.productos.length + ' registros encontrados de categoría: ' + categoria);
         w3.displayObject("listaProductos", productos);
         if (productos.productos.length > 0) {
-            w3.show('#listaProductos');
+
+
+            w3.removeClass('#listaProductos', 'w3-hide')
+
         }
-        document.getElementById('modalCargando').style.display = 'none';
+        w3.addClass('#cargando', 'w3-hide');
+
+
     });
     w3_close();
 
@@ -270,29 +245,33 @@ function cargarTablaCategoria(categoria) {
 
 function cargarTablaAlmacen(almacen) {
 
-    document.getElementById('modalCargando').style.display = 'block';
+    w3.removeClass('#cargando', 'w3-hide');
     socket.emit('Cargar tabla ubicacion', almacen, function (productos) {
+        json = productos.productos;
         $('#mensaje').text(productos.productos.length + ' registros encontrados en almacen: ' + almacen);
         w3.displayObject("listaProductos", productos);
         if (productos.productos.length > 0) {
-            w3.show('#listaProductos');
+            w3.removeClass('#listaProductos', 'w3-hide');
         }
-        document.getElementById('modalCargando').style.display = 'none';
+        w3.addClass('#cargando', 'w3-hide');
     });
     w3_close();
 
 }
 
 function cargarTablaMarca(almacen) {
-    document.getElementById('modalCargando').style.display = 'block';
+    // document.getElementById('modalCargando').style.display = 'block';
+
+    w3.removeClass('#cargando', 'w3-hide');
 
     socket.emit('Cargar tabla marca', almacen, function (productos) {
+        json = productos.productos;
         $('#mensaje').text(productos.productos.length + ' registros encontrados en marca: ' + almacen);
         w3.displayObject("listaProductos", productos);
         if (productos.productos.length > 0) {
-            w3.show('#listaProductos');
+            w3.removeClass('#listaProductos', 'w3-hide')
         }
-        document.getElementById('modalCargando').style.display = 'none'
+        w3.addClass('#cargando', 'w3-hide');
     });
 
     w3_close();
@@ -300,32 +279,124 @@ function cargarTablaMarca(almacen) {
 }
 
 function guardarArticulo() {
-  
-    
-    var datos = {
-        serie: document.getElementById("txtSerie").value,
-        codigo: $('#lblCodigo').text(),
-        meses: document.getElementById("txtMeses").value,
-        anio: document.getElementById("txtAnio").value,
-        observacion : document.getElementById("txtObservacion").value,
+    var opcion = $('input[name="opcion"]:checked').val();
 
-        peso: document.getElementById("txtPeso").value,
-        fecha: document.getElementById("txtFecha").value,
-        ubicacion: document.getElementById("cbxAlmacen2").value,
-        proveedor: document.getElementById("txtProveedor").value
-    };
-    
-    alert(datos.ubicacion);
-    
-   
-    
-//    socket.emit('Guardar articulo', datos, function (rows) {
-//      
-//    });
-    
+    if (opcion == 'lotes') {
+        var datos = {
+            serie: 'S/N',
+            codigo: $('#lblCodigo').text(),
+            cantidad: document.getElementById("txtCantidad").value,
+            usuario: $('#lblUsuario').text(),
+            meses: document.getElementById("txtMeses").value,
+            anio: document.getElementById("txtAnio").value,
+            observacion: document.getElementById("txtObservacion").value,
 
-    
- 
+            peso: document.getElementById("txtPeso").value,
+            fecha: document.getElementById("txtFecha").value,
+            ubicacion: document.getElementById("cbxAlmacen2").value,
+            proveedor: document.getElementById("txtProveedor").value,
+
+        };
+        if (datos.cantidad == '' || datos.cantidad == null) {
+            swal("Error", "Ingrese la cantidad", "error");
+        } else if (datos.serie == '' || datos.serie == null) {
+            swal("Error", "Inserte un numero de serie", "error");
+        } else if (datos.meses == '' || datos.meses == null) {
+            swal("Error", "Inserte los meses de garantíá del producto", "error");
+        } else if (datos.anio == '' || datos.anio == null) {
+            swal("Error", "Inserte el año de fabricación del producto", "error");
+        } else if (datos.observacion == '' || datos.observacion == null) {
+            swal("Error", "Inserte una observación del producto", "error");
+        } else if (datos.peso == '' || datos.peso == null) {
+            swal("Error", "Inserte el peso", "error");
+        } else if (datos.fecha == '' || datos.fecha == null) {
+            swal("Error", "Inserte la fecha del producto", "error");
+        } else if (datos.ubicacion == '' || datos.ubicacion == null) {
+            swal("Error", "Escoja la ubicación del producto", "error");
+        } else if (datos.proveedor == '' || datos.proveedor == null) {
+            swal("Error", "Escoja el proveedor del producto", "error");
+        } else {
+            for (var i = 0; i < datos.cantidad; i++) {
+                socket.emit('Guardar articulo', datos, function (rows) {
+                    if (rows == 1) {
+                        document.getElementById('modalAnadir').style.display = 'none'
+                        swal("", "El artículo ha sido registrado satisfactoriamente", "success");
+                        cargarTabla(datos.codigo);
+                    } else {
+
+                        swal("Error", "El artículo ya existe", "error");
+                    }
+
+
+                });
+            }
+
+
+        }
+
+
+
+    } else if (opcion == 'individual') {
+        var datos = {
+            serie: document.getElementById("txtSerie").value,
+            codigo: $('#lblCodigo').text(),
+            cantidad: document.getElementById("txtCantidad").value,
+            usuario: $('#lblUsuario').text(),
+            meses: document.getElementById("txtMeses").value,
+            anio: document.getElementById("txtAnio").value,
+            observacion: document.getElementById("txtObservacion").value,
+
+            peso: document.getElementById("txtPeso").value,
+            fecha: document.getElementById("txtFecha").value,
+            ubicacion: document.getElementById("cbxAlmacen2").value,
+            proveedor: document.getElementById("txtProveedor").value
+        };
+
+        if (datos.serie == '' || datos.serie == null) {
+            swal("Error", "Inserte un numero de serie", "error");
+        } else if (datos.meses == '' || datos.meses == null) {
+            swal("Error", "Inserte los meses de garantíá del producto", "error");
+        } else if (datos.anio == '' || datos.anio == null) {
+            swal("Error", "Inserte el año de fabricación del producto", "error");
+        } else if (datos.observacion == '' || datos.observacion == null) {
+            swal("Error", "Inserte una observación del producto", "error");
+        } else if (datos.peso == '' || datos.peso == null) {
+            swal("Error", "Inserte el peso", "error");
+        } else if (datos.fecha == '' || datos.fecha == null) {
+            swal("Error", "Inserte la fecha del producto", "error");
+        } else if (datos.ubicacion == '' || datos.ubicacion == null) {
+            swal("Error", "Escoja la ubicación del producto", "error");
+        } else if (datos.proveedor == '' || datos.proveedor == null) {
+            swal("Error", "Escoja el proveedor del producto", "error");
+        } else {
+
+            socket.emit('Guardar articulo', datos, function (rows) {
+                if (rows == 1) {
+                    document.getElementById('modalAnadir').style.display = 'none'
+                    swal("", "El artículo ha sido registrado satisfactoriamente", "success");
+                    cargarTabla(datos.codigo);
+                } else {
+
+                    swal("Error", "El artículo ya existe", "error");
+                }
+
+
+            });
+
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -333,15 +404,56 @@ function guardarArticulo() {
 }
 
 
+function paginar() {
+    var monkeyList = new List('listar', {
+        valueNames: ['name'],
+        page: 10,
+        pagination: true
+    });
+}
+
+function myFunction2() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("listaDetalle");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+
 
 
 $(document).ready(function () {
+    // $('#listaProductos').hide();
+    // $('#principal').hide();
 
 
-    w3.hide('#listaProductos')
+    $('#lblSerie').hide();
+
+    //  w3.hide('#listaProductos');
+    //  w3.hide('#principal');
     $('#txtBuscar').keypress(function (e) {
         if (e.keyCode == 13)
             buscar();
+    });
+
+    $('input[type=radio][name=opcion]').change(function () {
+        if (this.value == 'lotes') {
+
+            $('#lblSerie').hide();
+            $('#lblCantidad').show();
+
+        } else if (this.value == 'individual') {
+            $('#lblSerie').show();
+            $('#lblCantidad').hide();
+        }
     });
 
 

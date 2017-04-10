@@ -1,94 +1,96 @@
 
 var socket = io.connect();
 
-function cargarUbicacion() {
 
-    socket.emit('Cargar ubicacion', function (ubicacion) {
+function cargarTabla() {
+    socket.emit('Cargar eventos', function (clientes) {
 
 
-        generarGraficoUbicacion(ubicacion);
+        w3.removeClass('#tablaEventos', 'w3-hide')
+        w3.displayObject("tablaEventos", clientes);
+
+        paginar();
+        destruir();
 
 
     });
 
 
-};
+
+}
+
+function destruir() {
+    w3.removeClass('#paging_container11', 'container');
+    w3.removeClass('#lblInfo', 'info_text');
+
+}
+
+function redireccionarAdmin() {
+     window.location="/admin";
+  //  window.locationf = "/home";
+}
+
+
+function buscar() {
+    w3.filterHTML('#tablaEventos', 'li', $('#txtBuscar').val());
+
+
+}
 
 function cargarCategoria() {
 
-    socket.emit('Cargar categoria', function (categoria) {
+    socket.emit('Cargar categoria chart', function (categoria) {
 
-
-        generarGrafico(categoria);
-
-
-    });
-}
-
-function generarGrafico(valores) {
-    var plotObj = $.plot($("#flot-pie-chart"), valores, {
-        series: {
-            pie: {
-                show: true,
-                combine: {
-                    color: '#999',
-                    threshold: 0.1
-                }
-            }
-        },
-
-        grid: {
-            hoverable: true,
-
-        },
-        tooltip: true,
-        tooltipOpts: {
-            content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
-            shifts: {
-                x: 50,
-                y: 0
+        // Build the chart
+        Highcharts.chart('container', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
             },
-            defaultTheme: true
-        }
-    });
-}
-;
-
-function generarGraficoUbicacion(valores) {
-
-    var plotObj = $.plot($("#chart_ubicacion"), valores, {
-
-        series: {
-            pie: {
-                show: true,
-                combine: {
-                    color: '#999',
-                    threshold: 0.1
-                }
-            }
-        },
-
-        grid: {
-            hoverable: true,
-
-        },
-        tooltip: true,
-        tooltipOpts: {
-            content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
-            shifts: {
-                x: 50,
-                y: 0
+            title: {
+                text: 'Catetorías'
             },
-            defaultTheme: true
-        }
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true
+                    },
+                    showInLegend: false
+                }
+            },
+            series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: categoria
+                }]
+        });
+
+
     });
 }
-;
+
+function paginar() {
+
+    $('#paging_container11').pajinate();
+}
 
 $(document).ready(function () {
- 
+
+
+
+    cargarTabla();
     cargarCategoria();
-    cargarUbicacion();
+
+
+
+
 
 
 });

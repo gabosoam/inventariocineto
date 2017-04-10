@@ -38,6 +38,24 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
+
+    getTablaEventos: function (callback) {
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(error, null)
+            } else {
+                connection.query('SELECT  * FROM v_evento', function (error, results, fields) {//
+                    if (error) {
+                        callback('error en la consulta: ' + error, null);
+                    } else {
+                        callback(null, {eventos: results});
+                        connection.release(); //Da por finalizado la consulta
+                    }
+                });
+            }
+        });
+    },
+
     //Traigo informacion de la tabla datos
     getComboGenero: function (callback) {
         iniciar.getConnection(function (err, connection) {
@@ -72,7 +90,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
-    
+
     //Traigo informacion de la tabla datos
     getUbicacion: function (callback) {
         iniciar.getConnection(function (err, connection) {
@@ -96,7 +114,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             if (err) {
                 callback(err, null)
             } else {
-                connection.query("select guardar_cliente("
+                connection.query("select sp_cliente("
                         + "'" + datos.cedula + "',"
                         + "'" + datos.nombre + "',"
                         + "'" + datos.apellido + "',"
@@ -109,16 +127,14 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                         + "'" + datos.pais + "',"
                         + "'" + datos.ciudad + "',"
                         + "'" + datos.direccion + "'"
-                        + ")", datos, function (error, results,rows, mensaje) {
+                        + ") AS mensaje", datos, function (error, results, rows, mensaje) {
 
                             if (error) {
                                 callback('error en la insercion: ' + error, null);
                             } else {
-                                console.log('LOS ROOOOOWS SON'+rows[0]);
-                                console.log('rows: '+rows[0].mensaje);
-                                console.log('rows: '+mensaje);
-                           
-                                callback(null, (results.affectedRows));
+                            
+
+                                callback(results);
                                 //indica el numero de filas afectadas
                                 connection.release();
                             }
@@ -154,12 +170,12 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                 callback(err, null);
             } else {
                 connection.query('DELETE FROM persona WHERE identificacion_persona=?', cedula, function (error, result) {
-             
-                    
+
+
                     if (error) {
-                        
+
                         callback(error, null); //devuelve un error
-                        
+
 
                     } else {
 

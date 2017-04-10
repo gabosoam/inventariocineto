@@ -16,37 +16,21 @@
 
     </head>
 
-    <body >
+    <body class="w3-white" >
 
-        <div class="topnav" id="myTopnav">
-
-
-            <a href="/home" class="w3-bar-item w3-button "><span class="fa fa-home"></span> Inventario</a>
-            <a href="/cliente" class="w3-bar-item w3-button"><span class="fa fa-address-book"></span> Clientes</a>
-            <a href="#" class="w3-bar-item w3-button"><span class="fa fa-wrench"></span> Técnicos</a>
-            <a href="/inventario" class="w3-bar-item w3-button"><span class="fa fa-th-large"></span> Inventario</a>
-            <a href="/ingresos" class="w3-bar-item w3-button"><span class="fa fa-shopping-cart"></span> Ingresos</a>
-            <a href="/ingresos" class="w3-bar-item w3-button"><span class="fa fa-truck"></span> Egresos</a>
+        <div w3-include-html="../header.html"></div> 
 
 
-            <a href="/logout" class="w3-bar-item w3-right"><span class="fa fa-sign-out"></span> Cerrar sesión</a>
-            <a href="#" class="w3-bar-item w3-right"><span class="fa fa-user"></span> <%-usuario.nombres_usuario%></a>
-
-
-            <a style="font-size:15px;" class="icon" onclick="myFunction()"> &#9776;</a>
-        </div>
-
-
-        <div class="w3-bar w3-dark-grey w3-padding w3-card-4 ">
+        <div class="w3-bar w3-light-grey w3-padding w3-card-4 ">
 
 
 
 
 
             <div class=" w3-mobile">
-                <button onclick="document.getElementById('id01').style.display = 'block'" class=" w3-bar-item w3-button w3-red  w3-circle w3-btn w3-left  "><span class="fa fa-plus"></span></button>
-                <button  class="w3-bar-item w3-button w3-blue w3-right  "><span class="fa fa-search"></span></button>
-                <input oninput="w3.filterHTML('#listaClientes', 'li', this.value)" id="txtBuscar" type="text" class="w3-bar-item w3-input w3-white w3-right  " placeholder="Buscar clientes..">
+                <button onclick="document.getElementById('id01').style.display = 'block'" class=" w3-bar-item w3-button w3-teal  w3-circle w3-btn w3-left  "><span class="fa fa-plus"></span></button>
+                <button  class="w3-bar-item w3-button w3-teal w3-right "><span class="fa fa-search"></span></button>
+                <input oninput="w3.filterHTML('#listaClientes', 'li', this.value)" id="txtBuscar" type="text" class="w3-bar-item w3-input w3-white w3-right " placeholder="Buscar clientes..">
 
 
 
@@ -54,33 +38,46 @@
 
 
         </div>
-        <div class="w3-sidebar w3-bar-block w3-collapse w3-card-2 w3-animate-left w3-dark-grey" style="width:200px;" id="mySidebar">
+        <div class="w3-sidebar w3-bar-block w3-collapse w3-card-2 w3-animate-left w3-white w3-card-2 w3-margin-top" style="width:200px;" id="mySidebar">
             <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Cerrar &times;</button>
-            <label class="w3-bar-item">Filtros:</label>
-            <label class="w3-bar-item">Por categoría</label>
-            <select id="categoria" class="w3-bar-item">
 
-            </select>
 
 
         </div>
         <div class="w3-main" style="margin-left:200px">
-            <div class="w3-dark-grey">
-                <button class="w3-button w3-dark-grey w3-xlarge w3-hide-large" onclick="w3_open()">&#9776; <span class="fa fa-filter"></span></button>
+            <div class="w3-white">
+                <button class="w3-button w3-white w3-text-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776; </button>
 
 
             </div>
-            <div class="w3-container">
+            <div class="w3-container ">
                 <h4 id="mensaje"></h4>
-                <ul id="listaClientes" class="w3-ul w3-card-4">
+
+                <ul id="listaClientes" class="w3-ul w3-card-4 w3-white w3-hide">
                     <li class="w3-padding-16" w3-repeat="clientes">
-                        <span onclick="eliminarCliente({{cedula}})" 
-                              class="w3-button w3-white w3-xlarge w3-right"><button  class=" w3-button   "><span class="fa fa-trash-o"></span></button></span>
-                        <img src="../images/client.png" class="w3-left w3-circle w3-margin-right" style="width:50px">
-                        <span class="w3-large">{{nombre}} {{apellido}}</span><br>
-                        <span> <strong>Cédula: </strong>{{cedula}}<br></span>
-                        <span> <strong>Teléfonos : </strong>{{domicilio}} - {{celular}}<br></span>
-                        <span> <strong>Correo : </strong><a href="mailto:{{correo}}">{{correo}}</a><br></span>
+
+                        <div class="w3-row">
+                            <div class="w3-col s3 m2 l1">
+                                <img src="../images/client2.png" class="w3-left  w3-margin-right" style="width:50px">
+                            </div>
+                            <div class="w3-col s6 m6 l8">
+                                <span class="w3-large">{{nombre}} {{apellido}}</span><br>
+                                <span> <strong>Cédula: </strong>{{cedula}}<br></span>
+                                <span> <strong>Teléfonos : </strong>{{domicilio}} - {{celular}}<br></span>
+                                <span> <strong>Correo : </strong><a href="mailto:{{correo}}">{{correo}}</a><br></span>
+                            </div>
+                            <div class="w3-col s3 m3 l2 w3-center">
+                                <span> <strong>Contratos: </strong>{{cantidad}}<br></span><br>
+                                <span onclick="eliminarCliente({{cedula}})" 
+                                      ><button  class=" w3-button w3-white w3-border w3-border-gray   "><span class="fa fa-trash"></span></button></span>
+                                <span onclick="eliminarCliente({{cedula}})" 
+                                      ><button  class=" w3-button w3-white w3-border w3-border-gray   "><span class="fa fa-file"></span></button></span>
+                            </div>
+                        </div>
+
+
+
+
 
                     </li>
 
@@ -94,54 +91,51 @@
         <div id="id01" class="w3-modal">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
 
-                <div class="w3-center"><br>
-                    <div class=" w3-container w3-blue-gray">
-                        <h3>Nuevo Cliente</h3>
-                    </div>
-                </div>
+                <header class="w3-container w3-teal"> 
+                    <span onclick="document.getElementById('id01').style.display = 'none'" 
+                          class="w3-button w3-display-topright">&times;</span>
+                    <h4>Nuevo Cliente</h4>
+                </header>
 
-                <form class="w3-container"  method="post" action="/cliente/nuevoRegistro">
+                <div class="w3-container"  >
                     <div class="w3-section">
                         <div class="w3-row">
                             <div class="w3-col s12 m12 l6 w3-padding">
 
-                                <input class="w3-input w3-mobile" type="text" placeholder="Ingresar cédula" name="cedula" required>                                          
-                                <input class="w3-input" type="text" placeholder="Ingresar nombres" name="nombre" required>
-                                <input class="w3-input" type="text" placeholder="Ingresar apellidos" name="apellido" required>
-                                <select id="genero" class="w3-select"   name="genero" required>
+                                <input class="w3-input w3-mobile w3-border" type="text" placeholder="Ingresar cédula" id="cedula" required>                                          
+                                <input class="w3-input w3-border" type="text" placeholder="Ingresar nombres" id="nombre" required>
+                                <input class="w3-input w3-border" type="text" placeholder="Ingresar apellidos" id="apellido" required>
+                                <select id="genero" class="w3-select w3-border"   id="genero" required>
 
                                 </select>
-                                <select id="estado" class="w3-select"   name="estado" required>
+                                <select id="estado" class="w3-select w3-border"   id="estado" required>
                                     <option disabled selected>Seleccionar estado civil...</option>
                                 </select>
-                                <input class="w3-input" type="number" placeholder="No. teléfono fijo" name="domicilio" required>
+                                <input class="w3-input w3-border" type="number" placeholder="No. teléfono fijo" id="domicilio" required>
 
 
 
                             </div>
 
                             <div class="w3-col s12 m12 l6 w3-padding">
-                                <input class="w3-input" type="number" placeholder="No. celular" name="celular" required>
-                                <input class="w3-input" type="email" placeholder="Email" name="correo" required>
-                                <input class="w3-input" type="date" placeholder="Fecha de nacimiento" name="fecha" required>
-                                <input class="w3-input" type="text" placeholder="País" name="pais" required>
-                                <input class="w3-input" type="text" placeholder="Ciudad" name="ciudad" required>
-                                <input class="w3-input" type="text" placeholder="Dirección" name="direccion" required>
+                                <input class="w3-input w3-border" type="number" placeholder="No. celular" id="celular" required>
+                                <input class="w3-input w3-border" type="email" placeholder="Email" id="correo" required>
+                                <input class="w3-input w3-border" type="date" placeholder="Fecha de nacimiento" id="fecha" required>
+                                <input class="w3-input w3-border" type="text" placeholder="País" id="pais" required>
+                                <input class="w3-input w3-border" type="text" placeholder="Ciudad" id="ciudad" required>
+                                <input class="w3-input w3-border" type="text" placeholder="Dirección" id="direccion" required>
                             </div>
 
                         </div>
 
 
-                        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Guardar</button>
-
+        
+                        <button class="w3-button  w3-teal w3-right w3-section w3-padding" onclick="guardarCliente()">Guardar</button>
 
                     </div>
-                </form>
-
-                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                    <button onclick="document.getElementById('id01').style.display = 'none'" type="button" class="w3-button w3-red">Cancelar</button>
-
                 </div>
+
+               
 
             </div>
         </div>
@@ -163,6 +157,10 @@
                         document.getElementById("mySidebar").style.display = "none";
                         }
         </script>
+        <script>
+            w3.includeHTML();
+        </script>
+
 
 
 

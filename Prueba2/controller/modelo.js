@@ -135,7 +135,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                     if (error) {
                         callback('error en la consulta: ' + error, null);
                     } else {
-                        callback(null,{productos:results});
+                        callback(null, {productos: results});
                         connection.release();//Da por finalizado la consulta
                     }
                 });
@@ -174,6 +174,24 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
 
 
                         callback(null, {resultados: results});
+                        connection.release();//Da por finalizado la consulta
+                    }
+                });
+            }
+        });
+    },
+    getAllTablaChart: function (view, callback) {
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(err, null)
+            } else {
+                connection.query('SELECT  * FROM ' + view, function (error, results, fields) {//
+                    if (error) {
+                        callback('error en la consulta: ' + error, null);
+                    } else {
+
+
+                        callback(null, results);
                         connection.release();//Da por finalizado la consulta
                     }
                 });
@@ -265,8 +283,8 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
-    
-        insertArticulo: function (datos, callback) {//la variable datos contiene todo lo que se va a insertar en formato json
+
+    insertArticulo: function (datos, callback) {//la variable datos contiene todo lo que se va a insertar en formato json
         iniciar.getConnection(function (err, connection) {
             if (err) {
                 callback(err, null)
@@ -280,13 +298,14 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                         + "" + datos.peso + ","
                         + "'" + datos.fecha + "',"
                         + "'" + datos.ubicacion + "',"
-                        + "'" + datos.proveedor + "'"
+                        + "'" + datos.proveedor + "',"
+                        + "'" + datos.usuario + "'"
                         + ")", datos, function (error, results, rows) {
 
                             if (error) {
                                 callback('error en la insercion: ' + error, null);
                             } else {
-                                console.log('rows: ' + rows[0].mensaje);
+                                console.log(' DATOS AFECTADOS: ' + results.affectedRows);
 
                                 callback(null, (results.affectedRows));
                                 //indica el numero de filas afectadas
