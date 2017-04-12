@@ -155,16 +155,24 @@ function cargarProveedor() {
 
 
 
-function cargarTablaDetalle(codigo) {
+function cargarTablaDetalle(codigo, producto, cantidad) {
+
+
+
+    var myObject = {codigo2: codigo, producto: producto, cantidad: cantidad};
 
 
 
 
     socket.emit('Detalle', codigo, function (productos) {
         w3.displayObject("listaDetalle", productos);
-        w3.displayObject("lblCodigo", productos);
-        $('#lblCodigo').text('hola');
+       
+
+
+
+
         document.getElementById('modalVer').style.display = 'block';
+         w3.displayObject("datosActa", myObject);
 
     });
 
@@ -278,6 +286,43 @@ function cargarTablaMarca(almacen) {
 
 }
 
+function guardarProducto() {
+
+    var datos = {
+
+        codigo: document.getElementById("codigo").value,
+        nombre: document.getElementById("nombre").value,
+        categoria: document.getElementById("cbxCategoria2").value,
+        marca: document.getElementById("cbxMarca2").value
+
+    };
+
+    if (datos.codigo == '' || datos.codigo == null) {
+        swal("Error", "Ingrese el código", "error");
+    } else if (datos.nombre == '' || datos.nombre == null) {
+        swal("Error", "Inserte un nombre", "error");
+    } else if (datos.categoria == '' || datos.categoria == null) {
+        swal("Error", "Escoja la categoría", "error");
+    } else if (datos.marca == '' || datos.marca == null) {
+        swal("Error", "Escoja la categoría", "error");
+    } else {
+        socket.emit('Guardar producto', datos, function (mensaje) {
+
+
+            var mensaje = mensaje[0].mensaje;
+
+            if (mensaje == 'El producto ha sido registrado') {
+                swal('Bien', mensaje, "success");
+                document.getElementById('modalNuevo').style.display = 'none';
+                cargarTabla(datos.codigo);
+            } else {
+                swal('Error', mensaje, "error");
+            }
+
+        });
+
+    }
+}
 function guardarArticulo() {
     var opcion = $('input[name="opcion"]:checked').val();
 

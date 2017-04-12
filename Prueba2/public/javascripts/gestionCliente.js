@@ -1,4 +1,20 @@
+$(document).ready(function () {
 
+    cargarTabla();
+    cargarGeneros();
+    cargarEstados();
+
+    $('#reporte').on('click', function () {
+        var load = '<img src="images/loading.gif"  width="30px" height="30px" style="margin-top:15px">';
+
+    
+        $('#miReporte').css("display", "none");
+
+    });
+
+
+
+});
 
 
 var socket = io.connect();
@@ -147,14 +163,9 @@ function cargarTabla() {
     socket.emit('Cargar clientes', function (clientes) {
         w3.displayObject("listaClientes", clientes);
         w3.removeClass('#listaClientes', 'w3-hide');
+
     });
 
 
 }
 
-$(document).ready(function () {
-
-    cargarTabla();
-    cargarGeneros();
-    cargarEstados();
-})

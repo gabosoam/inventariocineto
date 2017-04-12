@@ -39,7 +39,7 @@
                     <button onclick="buscar();" class="w3-bar-item w3-button w3-teal w3-right"><span class="fa fa-search"></span></button>
                     <input id="txtBuscar" type="text" class=" w3-bar-item w3-input  w3-right  " placeholder="Buscar productos..">
                     <i id="cargando" class="w3-text-teal fa fa-spinner fa-pulse fa-2x  fa-fw w3-bar-item  w3-right w3-hide "></i>
-                    
+
                 </div>
 
             </div>
@@ -115,7 +115,7 @@
                                 <button onclick="abrirModal('{{codigo}}')"  class=" w3-button w3-padding w3-white w3-border w3-border-gray w3-medium  ">
                                     <span class="fa fa-shopping-cart"></span> 
                                 </button>
-                                <button onclick="cargarTablaDetalle('{{codigo}}')"  class=" w3-button w3-white w3-border w3-border-gray w3-padding w3-medium  ">
+                                <button onclick="cargarTablaDetalle('{{codigo}}','{{nombre}}','{{cantidad}}')"  class=" w3-button w3-white w3-border w3-border-gray w3-padding w3-medium  ">
                                     <span class="fa fa-eye"></span> 
                                 </button>
                             </div>
@@ -146,22 +146,22 @@
                     <h4>Nuevo producto</h4>
                 </header>
 
-                <form class="w3-container"  method="post" action="/modelo/nuevoProducto">
+                <div class="w3-container"  >
                     <div class="w3-section">
 
                         <div class="w3-row">
                             <div class="w3-col s12 m12 l12 w3-padding">
 
-                                <input class="w3-input w3-mobile" type="text" placeholder="Ingresar código" name="codigo" required>                                          
-                                <input class="w3-input" type="text" placeholder="Ingresar nombre del producto" name="nombre" required>
+                                <input class="w3-input w3-mobile" type="text" placeholder="Ingresar código" id="codigo" required>                                          
+                                <input class="w3-input" type="text" placeholder="Ingresar nombre del producto" id="nombre" required>
 
-                                <select id="cbxCategoria2" class="w3-select w3-border"   name="categoria" required>
+                                <select id="cbxCategoria2" class="w3-select w3-border"   id="categoria" required>
                                     <option>Seleccionar categoría...</option>
                                     <option w3-repeat="resultados">
                                         {{label}}
                                     </option>
                                 </select>
-                                <select id="cbxMarca2" class="w3-select"   name="marca" required>
+                                <select id="cbxMarca2" class="w3-select"    required>
                                     <option>Seleccionar marca...</option>
                                     <option w3-repeat="resultados">
                                         {{label}}
@@ -179,10 +179,10 @@
 
 
 
-                        <button class="w3-button  w3-teal w3-right w3-section w3-padding" type="submit">Guardar</button>
+                        <button onclick="guardarProducto()" class="w3-button  w3-teal w3-right w3-section w3-padding" >Guardar</button>
 
                     </div>
-                </form>
+                </div>
 
 
 
@@ -285,38 +285,71 @@
         </div>
 
         <div id="modalVer" class="w3-modal ">
-            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style=" max-width: 220mm">
 
                 <header class="w3-container w3-teal"> 
                     <span onclick="document.getElementById('modalVer').style.display = 'none'" 
                           class="w3-button w3-display-topright">&times;</span>
 
-                    <p id="lblCodigo">Existencias</p>
+                    <p id="lblCodigo">Vista previa</p>
 
                 </header>
 
 
                 <input type="hidden" id="txtCodigo" value='{{codigo}}'>
-                <div class="w3-container ">
+                <div  class="w3-container ">
+                    <a href="#" onclick="return xepOnline.Formatter.Format('reporte', {render:'download'});">
+                        <spam class="w3-button w3-teal w3-margin  w3-large fa fa-download">
+
+                        </spam> 
+                    </a>
+                    <div id="reporte">
+                        <div id="datosActa">
+                            <img src="../images/logo_cineto.png" class="w3-margin-top w3-hide">
+                            <h2>CINETO TELECOMUNICACIONES S.A.</h2>
+                            <hr>
+                            <p><strong>Producto: </strong> {{producto}}</p>
+                            <p><strong>Código: </strong> {{codigo2}} </p>
+                            <p><strong>Cantidad: </strong> {{cantidad}} </p>
+                        </div>
+                        <div  class="w3-responsive">
+
+                            <hr>
+
+                            <table id="listaDetalle" class="w3-table  w3-bordered">
+                                <thead>
+                                    <tr class="w3-dark-grey">
+                                        <th>Serie</th>
+                                        <th>Fecha de ingreso</th>
+                                        <th>Ubicación</th>
+                                        <th class="w3-hide">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="">
+                                    <tr w3-repeat="productos" class="item">
+                                        <td>{{serie}}</td>
+                                        <td>{{fecha}}</td>
+                                        <td>{{ubicacion}}</td>
+                                        <td class="w3-hide">{{descripcion}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                        </div>
+                        <footer class="w3-container w3-white " style="margin-bottom: 10px">
+                            <p class="w3-text-gray w3-center">Cineto Telecomunicaciones S.A. - La Pinta 236 y Rábida. Quito Ecuador, Edficio Alcatel</p>
+
+                        </footer>
+
+                    </div>
 
 
-                    <input class="w3-input w3-border w3-padding w3-card-4" type="text" placeholder="Buscar.." id="myInput" onkeyup="myFunction2()">
 
 
-                    <ul id="listaDetalle" class="list w3-ul w3-card-4 w3-white" > 
-                        <li class=" w3-padding-16 " w3-repeat="productos">
-                            <div class="w3-row">
 
-                                <div class="w3-col s12 m12 l12">
 
-                                    <span> <strong>Serie: </strong>{{serie}}<br></span>
-                                    <span> <strong>Fecha de ingreso: </strong>{{fecha}}<br></span>
-                                    <span> <strong>Ubicación: </strong>{{ubicacion}}<br></span>
-                                    <span> <strong>Descripción: </strong>{{descripcion}}<br></span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+
                     <div class="w3-row">
 
                     </div>
@@ -345,6 +378,7 @@
         <script src="../javascripts/gestionProducto.js" type="text/javascript"></script>
         <script src="../javascripts/list.min.js" type="text/javascript"></script>
         <script src="../javascripts/jsonconverter.js" type="text/javascript"></script>
+        <script src="../javascripts/toPdf.js" type="text/javascript"></script>
         <script>
         </script>    
         <script>

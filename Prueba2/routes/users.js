@@ -52,7 +52,7 @@ router.io.on('connection', function (socket) {
         });
     });
     socket.on('Cargar eventos', function (callback) {
-        controllerModelo.getAllTabla('v_evento',function (err, clientes) {
+        controllerModelo.getAllTabla('v_evento', function (err, clientes) {
             console.log(clientes);
             if (err) {
                 console.log("Ocurrio un error", err);
@@ -156,6 +156,41 @@ router.io.on('connection', function (socket) {
         });
 
     });
+
+    socket.on('Guardar producto', function (datos, callback) {
+        console.log('   LOS DATOS SOOOON: ' + datos);
+        
+        
+
+
+        controllerModelo.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
+            if (error) {
+                console.log(error);
+                callback(error);
+
+            } else {
+                callback(mensaje);
+            }
+        });
+
+    });
+
+    socket.on('Guardar acta', function (datos, callback) {
+        console.log('   LOS DATOS SOOOON: ' + datos);
+
+
+        controllerActa.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
+            if (error) {
+                console.log(error);
+                callback(error);
+
+            } else {
+                callback(mensaje);
+            }
+        });
+
+    });
+
 
     socket.on('Guardar cliente', function (datos, callback) {
         console.log('   LOS DATOS SOOOON: ' + datos);
@@ -268,6 +303,22 @@ router.io.on('connection', function (socket) {
         console.log('EL CODIGO ES:' + codigo);
 
         controllerModelo.getDetalle(codigo, function (error, productos) {
+            if (error) {
+
+                callback();
+
+            } else {
+
+                callback(productos);
+            }
+        });
+
+    });
+
+    socket.on('Detalle Acta', function (codigo, callback) {
+        console.log('EL CODIGO ES:' + codigo);
+
+        controllerActa.getDetalle(codigo, function (error, productos) {
             if (error) {
 
                 callback();

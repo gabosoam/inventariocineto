@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var controllerCliente = require('../controller/cliente.js');
+var winston = require('winston');
 
 router.io = require('socket.io')();
 
@@ -75,14 +76,22 @@ router.io.on('connection', function (socket) {
                 callback({error: true});
 
             } else {
-                console.log('registro eliminado: ', body);
+
+
+
+                var logger = new (winston.Logger)({
+                    transports: [
+                        new (winston.transports.Console)(),
+                        new (winston.transports.File)({filename: 'C:\.log.txt'})
+                    ]
+                });
                 callback({error: false});
             }
         });
 
     });
 
-  
+
 
     socket.on('disconnect', function () {
         console.log("Desconectado");

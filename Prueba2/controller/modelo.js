@@ -268,14 +268,14 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                         + "'" + datos.nombre + "',"
                         + "'" + datos.categoria + "',"
                         + "'" + datos.marca + "'"
-                        + ")", datos, function (error, results, rows) {
+                        + ") AS mensaje", datos, function (error, results, rows) {
 
                             if (error) {
                                 callback('error en la insercion: ' + error, null);
                             } else {
-                                console.log('rows: ' + rows[0].mensaje);
+                             
 
-                                callback(null, (results.affectedRows));
+                                callback(null, results);
                                 //indica el numero de filas afectadas
                                 connection.release();
                             }

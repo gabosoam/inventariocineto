@@ -31,7 +31,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                     if (error) {
                         callback('error en la consulta: ' + error, null);
                     } else {
-                        callback(null, {actas: results});
+                        callback(null, { actas: results });
                         connection.release(); //Da por finalizado la consulta
                     }
                 });
@@ -44,7 +44,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             if (err) {
                 callback(err, null);
             } else {
-                connection.query("SELECT sp_contrato('"+datos.id+"','"+datos.inicio+"','"+datos.final+"','"+datos.descripcion+"','"+datos.cliente+"') AS nota", datos, function (error, results, rows) {
+                connection.query("SELECT sp_acta('" + datos.codigo + "','" + datos.tipo + "','" + datos.fecha + "','" + datos.hora + "','" + datos.contrato + "','" + datos.descripcion + "') AS nota", datos, function (error, results, rows) {
 
                     if (error) {
                         callback('error en la insercion: ' + error, null);
@@ -59,7 +59,25 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                 });
             }
         });
-    }
+    },
+
+    getDetalle: function (acta, callback) {
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(err, null)
+            } else {
+                connection.query('SELECT  * FROM v_actaDetalle WHERE acta=?', acta, function (error, results, fields) {//
+                    if (error) {
+                        callback('error en la consulta: ' + error, null);
+                    } else {
+                        console.log(results);
+                        callback(null, { resultados: results });
+                        connection.release();//Da por finalizado la consulta
+                    }
+                });
+            }
+        });
+    },
 
 
 };

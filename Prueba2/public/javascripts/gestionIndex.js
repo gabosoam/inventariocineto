@@ -50,7 +50,7 @@ function cargarCategoria() {
                 type: 'pie'
             },
             title: {
-                text: 'Catetorías'
+                text: 'Categorías'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -62,11 +62,11 @@ function cargarCategoria() {
                     dataLabels: {
                         enabled: true
                     },
-                    showInLegend: false
+                    showInLegend: true
                 }
             },
             series: [{
-                    name: 'Brands',
+                    name: 'Categorías',
                     colorByPoint: true,
                     data: categoria
                 }]
