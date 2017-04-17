@@ -3,6 +3,8 @@ var socket = io.connect();
 $(document).ready(function () {
 
     cargarTabla();
+    cargarTablaContratos();
+    cargarTablaUsuarios();
 
 
 });
@@ -16,6 +18,33 @@ function cargarTabla() {
    
 
 
+}
+
+function cargarTablaContratos() {
+   
+    socket.emit('Cargar contratos', function (contratos) {
+     
+        w3.displayObject("listaContratos", contratos);
+        w3.removeClass('#listaContratos','w3-hide');
+    });
+}
+
+function cargarTablaContratos() {
+   
+    socket.emit('Cargar contratos', function (contratos) {
+     
+        w3.displayObject("listaContratos", contratos);
+        w3.removeClass('#listaContratos','w3-hide');
+    });
+}
+
+function cargarTablaUsuarios() {
+   
+    socket.emit('Cargar usuarios', function (contratos) {
+     
+        w3.displayObject("listaUsuarios", contratos);
+        w3.removeClass('#listaUsuarios','w3-hide');
+    });
 }
 
 function openCity(evt, cityName) {

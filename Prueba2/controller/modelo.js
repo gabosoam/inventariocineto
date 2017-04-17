@@ -92,6 +92,23 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
         });
     },
 
+    getGlobalActa: function (termino, callback) {
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(err, null)
+            } else {
+                connection.query('SELECT * FROM v_productos WHERE serie LIKE \'%' + termino + '%\' OR nombre LIKE \'%' + termino + '%\' OR categoria LIKE \'%' + termino + '%\'', function (error, results, fields) {//
+                    if (error) {
+                        callback('error en la consulta: ' + error, null);
+                    } else {
+                        callback(null, {productos: results});
+                        connection.release();//Da por finalizado la consulta
+                    }
+                });
+            }
+        });
+    },
+
     //Traigo informacion de la tabla datos
     getTablaUbicacion: function (ubicacion, callback) {
         iniciar.getConnection(function (err, connection) {

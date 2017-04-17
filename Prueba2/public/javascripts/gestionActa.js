@@ -1,6 +1,12 @@
 var socket = io.connect();
+var acta;
 
 $(document).ready(function () {
+
+    $('#txtBuscarProd').keypress(function (e) {
+        if (e.keyCode == 13)
+            buscar();
+    });
 
     cargarTabla();
 
@@ -18,6 +24,54 @@ function cargarTabla() {
     });
 }
 
+function buscar() {
+    var terminoBusqueda = $("#txtBuscarProd").val();
+
+    if (terminoBusqueda === '') {
+    } else {
+        cargarTablaProducto(terminoBusqueda);
+
+    }
+}
+
+function cargarTablaProducto(terminoBusqueda) {
+
+    socket.emit('Busqueda global Acta', terminoBusqueda.toLowerCase(), function (productos) {
+
+        w3.displayObject("listaProductos", productos);
+        json = productos.productos;
+        if (productos.productos.length > 0) {
+            w3.removeClass('#listaProductos', 'w3-hide')
+        }
+
+    });
+}
+
+function anadirProducto(actaProd, tipo) {
+
+    acta = actaProd;
+
+    if (tipo == 'De entrega') {
+        
+    }
+
+    switch (tipo) {
+        case 'De entrega':
+            document.getElementById('modalAnadir').style.display = 'block';
+            break;
+        case 'De retiro':
+            alert('Muy pronto');
+            break;
+        default:
+            
+    }
+
+
+
+
+
+}
+
 function cargarTablaDetalle(codigo, cliente, contrato, descripcion, fecha, hora) {
 
     var myObject = { acta: codigo, cliente: cliente, contrato: contrato, descripcion: descripcion, fecha: fecha, hora: hora };
@@ -30,7 +84,7 @@ function cargarTablaDetalle(codigo, cliente, contrato, descripcion, fecha, hora)
         if (productos.resultados.length > 0) {
             w3.displayObject("listaDetalle", productos);
 
-            w3.displayObject("lblCodigo", productos);
+            //    w3.displayObject("lblCodigo", productos);
             w3.displayObject("datosActa", myObject);
             $('#lblCodigo').text('Vista previa');
             //  $('#lblActa').text(codigo);
@@ -102,5 +156,41 @@ function guardarActas() {
         });
 
     }
+
+}
+
+
+function guardarProductos(serie, codigo) {
+
+
+    var datos = {
+        serie: serie,
+        codigo: codigo,
+        acta: acta,
+
+    };
+
+    socket.emit('Guardar acta prod', datos, function (mensaje) {
+
+        var mensaje = mensaje[0].nota;
+
+        if (mensaje == 'El producto ha sido asignado correctamente') {
+            swal('Bien', mensaje, "success");
+            document.getElementById('modalAnadir').style.display = 'none';
+            cargarTabla();
+        } else {
+            swal('Error', mensaje, "error");
+        }
+
+    });
+
+
+
+
+
+
+
+
+
 
 }

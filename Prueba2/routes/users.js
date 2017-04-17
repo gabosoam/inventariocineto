@@ -5,6 +5,7 @@ var controllerModelo = require('../controller/modelo.js');
 var controllerCliente = require('../controller/cliente.js');
 var controllerContrato = require('../controller/contrato.js');
 var controllerActa = require('../controller/acta.js');
+var controllerUsuario = require('../controller/usuario.js');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -46,6 +47,19 @@ router.io.on('connection', function (socket) {
 
     socket.on('Cargar contratos', function (callback) {
         controllerContrato.getTabla(function (err, clientes) {
+            console.log(clientes);
+            if (err) {
+                console.log("Ocurrio un error", err);
+                callback("");
+            } else {
+                //console.log(levels);
+                callback(clientes);
+            }
+        });
+    });
+
+    socket.on('Cargar usuarios', function (callback) {
+        controllerUsuario.getTabla(function (err, clientes) {
             console.log(clientes);
             if (err) {
                 console.log("Ocurrio un error", err);
@@ -196,6 +210,22 @@ router.io.on('connection', function (socket) {
 
     });
 
+     socket.on('Guardar acta prod', function (datos, callback) {
+        console.log('   LOS DATOS SOOOON: ' + datos);
+
+
+        controllerActa.insertProd(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
+            if (error) {
+                console.log(error);
+                callback(error);
+
+            } else {
+                callback(mensaje);
+            }
+        });
+
+    });
+
 
     socket.on('Guardar cliente', function (datos, callback) {
         console.log('   LOS DATOS SOOOON: ' + datos);
@@ -262,6 +292,22 @@ router.io.on('connection', function (socket) {
         console.log(terminoBusqueda);
 
         controllerModelo.getGlobal(terminoBusqueda, function (error, productos) {
+            if (error) {
+
+                callback();
+
+            } else {
+
+                callback(productos);
+            }
+        });
+
+    });
+
+     socket.on('Busqueda global Acta', function (terminoBusqueda, callback) {
+        console.log(terminoBusqueda);
+
+        controllerModelo.getGlobalActa(terminoBusqueda, function (error, productos) {
             if (error) {
 
                 callback();

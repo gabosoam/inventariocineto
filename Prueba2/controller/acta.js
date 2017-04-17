@@ -1,10 +1,10 @@
-var mysql = require('mysql'); //libreria para manejar la base de datos mysql
-var config = require('../config/index.js'); // me permite acceder a las variables que esta en el archivo congif/index.js
+var mysql = require('mysql'); //librería para manejar la base de datos mysql
+var config = require('../config/index.js'); //permite acceder a las variables que están en el archivo config/index.js
 var host = config.host;
 var user = config.user;
 var password = config.password;
 var database = config.database;
-var iniciar = mysql.createPool({//en la variable iniciar ya utilizo la libreria mysql para la conexion
+var iniciar = mysql.createPool({//en la variable iniciar 
     host: host,
     user: user,
     password: password,
@@ -21,7 +21,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
-    //Traigo informacion de la tabla datos
+    //Carga la información de la base de datos
     getTabla: function (callback) {
         iniciar.getConnection(function (err, connection) {
             if (err) {
@@ -38,8 +38,8 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
-    //insertar datos en la tabla datos
-    insert: function (datos, callback) {//la variable datos contiene todo lo que se va a insertar en formato json
+    //insertar datos en la tabla acta
+    insert: function (datos, callback) {
         iniciar.getConnection(function (err, connection) {
             if (err) {
                 callback(err, null);
@@ -60,7 +60,29 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
+    //insertar datos en la tabla actaEntrega
+    insertProd: function (datos, callback) {
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(err, null);
+            } else {
+                connection.query("SELECT sp_actaEntrega('" + datos.acta + "','" + datos.serie + "','" + datos.codigo + "') AS nota", datos, function (error, results, rows) {
 
+                    if (error) {
+                        callback('error en la insercion: ' + error, null);
+                    } else {
+                        console.log('LOS ROOOOOWS SON' + rows[0]);
+                        console.log(results);
+
+                        callback(results);
+                        //indica el numero de filas afectadas
+                        connection.release();
+                    }
+                });
+            }
+        });
+    },
+    //Carga la información de la tabla actaDetalle
     getDetalle: function (acta, callback) {
         iniciar.getConnection(function (err, connection) {
             if (err) {
