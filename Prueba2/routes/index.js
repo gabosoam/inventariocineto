@@ -80,8 +80,18 @@ router.get('/release', isLoggedIn, function (req, res, next) {
     res.render('release.html', {title: 'CRM', usuario: sess.usuarioDatos});
 });
 
+router.get('/reportes', isLoggedIn, function (req, res, next) {
+    res.render('reportes.html', {title: 'CRM', usuario: sess.usuarioDatos});
+});
+
 router.get('/admin', isLoggedIn, function (req, res, next) {
-    res.render('admin', {usuario: sess.usuarioDatos});
+    if(sess.usuarioDatos.rol_usuario=='admin'){
+        res.render('admin', {usuario: sess.usuarioDatos});
+    }else{
+        res.redirect('/home');
+    }
+
+    
 });
 
 router.post('/loginPass', function (req, res) {

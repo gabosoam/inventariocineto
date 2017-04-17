@@ -249,7 +249,7 @@ function cargarTablaCategoria(categoria) {
     w3_close();
 
 }
-;
+
 
 function cargarTablaAlmacen(almacen) {
 

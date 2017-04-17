@@ -7,7 +7,7 @@ $(document).ready(function () {
     $('#reporte').on('click', function () {
         var load = '<img src="images/loading.gif"  width="30px" height="30px" style="margin-top:15px">';
 
-    
+
         $('#miReporte').css("display", "none");
 
     });
@@ -167,5 +167,14 @@ function cargarTabla() {
     });
 
 
+}
+
+
+function cambiar() {
+  
+    socket.emit('Cambiar', function () {
+  
+
+    });
 }
 

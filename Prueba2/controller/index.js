@@ -82,7 +82,8 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                                 usuarioDatos = {
                                     nombre_usuario: results[0].nombre_usuario,
                                     password_usuario: results[0].password_usuario,
-                                    nombres_usuario: results[0].nombres_usuario
+                                    nombres_usuario: results[0].nombres_usuario,
+                                    rol_usuario: results[0].rol_usuario
                                 };
                                msg = usuarioDatos;
                             

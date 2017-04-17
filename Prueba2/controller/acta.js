@@ -44,7 +44,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             if (err) {
                 callback(err, null);
             } else {
-                connection.query("SELECT sp_acta('" + datos.codigo + "','" + datos.tipo + "','" + datos.fecha + "','" + datos.hora + "','" + datos.contrato + "','" + datos.descripcion + "') AS nota", datos, function (error, results, rows) {
+                connection.query("SELECT sp_acta('" + datos.codigo + "','" + datos.tipo + "','" + datos.fecha + "','" + datos.hora + "','" + datos.contrato + "','" + datos.descripcion +"','"+datos.usuario+ "') AS nota", datos, function (error, results, rows) {
 
                     if (error) {
                         callback('error en la insercion: ' + error, null);

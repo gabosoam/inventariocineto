@@ -26,6 +26,11 @@ router.io.on('connection', function (socket) {
         });
     });
 
+    socket.on('Cambiar', function (res) {
+     
+        res.redirect('/home');
+    });
+
     socket.on('Cargar clientes', function (callback) {
         controllerCliente.getTabla(function (err, clientes) {
             console.log(clientes);
@@ -159,8 +164,8 @@ router.io.on('connection', function (socket) {
 
     socket.on('Guardar producto', function (datos, callback) {
         console.log('   LOS DATOS SOOOON: ' + datos);
-        
-        
+
+
 
 
         controllerModelo.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
@@ -379,6 +384,21 @@ router.io.on('connection', function (socket) {
     socket.on('Cargar categoria chart', function (callback) {
 
         controllerModelo.getAllTablaChart('v_categoriaChart', function (error, productos) {
+            if (error) {
+
+                callback();
+
+            } else {
+
+                callback(productos);
+            }
+        });
+
+    });
+
+    socket.on('Cargar almacen chart', function (callback) {
+
+        controllerModelo.getAllTablaChart('v_almacenchart', function (error, productos) {
             if (error) {
 
                 callback();
