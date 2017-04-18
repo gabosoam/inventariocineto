@@ -287,13 +287,15 @@ function cargarTablaMarca(almacen) {
 }
 
 function guardarProducto() {
+    alert(document.getElementById("nombreUsuario").value);
 
     var datos = {
 
         codigo: document.getElementById("codigo").value,
         nombre: document.getElementById("nombre").value,
         categoria: document.getElementById("cbxCategoria2").value,
-        marca: document.getElementById("cbxMarca2").value
+        marca: document.getElementById("cbxMarca2").value,
+        usuario: document.getElementById("nombreUsuario").value
 
     };
 
@@ -331,11 +333,10 @@ function guardarArticulo() {
             serie: 'S/N',
             codigo: $('#lblCodigo').text(),
             cantidad: document.getElementById("txtCantidad").value,
-            usuario: $('#lblUsuario').text(),
+            usuario: document.getElementById("nombreUsuario").value,
             meses: document.getElementById("txtMeses").value,
             anio: document.getElementById("txtAnio").value,
             observacion: document.getElementById("txtObservacion").value,
-
             peso: document.getElementById("txtPeso").value,
             fecha: document.getElementById("txtFecha").value,
             ubicacion: document.getElementById("cbxAlmacen2").value,
@@ -386,7 +387,7 @@ function guardarArticulo() {
             serie: document.getElementById("txtSerie").value,
             codigo: $('#lblCodigo').text(),
             cantidad: document.getElementById("txtCantidad").value,
-            usuario: $('#lblUsuario').text(),
+            usuario: document.getElementById("nombreUsuario").value,
             meses: document.getElementById("txtMeses").value,
             anio: document.getElementById("txtAnio").value,
             observacion: document.getElementById("txtObservacion").value,

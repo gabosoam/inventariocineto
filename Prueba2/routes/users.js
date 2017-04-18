@@ -12,6 +12,13 @@ router.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
 
+function crearLog(mensaje) {
+    controllerUsuario.insertLog(mensaje, function (err) {
+        console.log(err);
+    });
+
+}
+
 router.io.on('connection', function (socket) {
     console.log('usuario conectado');
     socket.on('Cargar generos', function (callback) {
@@ -27,16 +34,13 @@ router.io.on('connection', function (socket) {
         });
     });
 
-    socket.on('Cambiar', function (res) {
-     
-        res.redirect('/home');
-    });
+
 
     socket.on('Cargar clientes', function (callback) {
         controllerCliente.getTabla(function (err, clientes) {
             console.log(clientes);
             if (err) {
-                console.log("Ocurrio un error", err);
+                crearLog(err);
                 callback("");
             } else {
                 //console.log(levels);
@@ -49,7 +53,7 @@ router.io.on('connection', function (socket) {
         controllerContrato.getTabla(function (err, clientes) {
             console.log(clientes);
             if (err) {
-                console.log("Ocurrio un error", err);
+                crearLog(err);
                 callback("");
             } else {
                 //console.log(levels);
@@ -62,7 +66,7 @@ router.io.on('connection', function (socket) {
         controllerUsuario.getTabla(function (err, clientes) {
             console.log(clientes);
             if (err) {
-                console.log("Ocurrio un error", err);
+                crearLog(err);
                 callback("");
             } else {
                 //console.log(levels);
@@ -70,11 +74,25 @@ router.io.on('connection', function (socket) {
             }
         });
     });
+    socket.on('Cargar logs', function (callback) {
+        controllerUsuario.getTablaLogs(function (err, clientes) {
+            console.log(clientes);
+            if (err) {
+                crearLog(err);
+                callback("");
+            } else {
+                //console.log(levels);
+                callback(clientes);
+            }
+        });
+    });
+    
+    
     socket.on('Cargar eventos', function (callback) {
         controllerModelo.getAllTabla('v_evento', function (err, clientes) {
             console.log(clientes);
             if (err) {
-                console.log("Ocurrio un error", err);
+                crearLog(err);
                 callback("");
             } else {
                 //console.log(levels);
@@ -85,9 +103,9 @@ router.io.on('connection', function (socket) {
 
     socket.on('Cargar contratos', function (callback) {
         controllerContrato.getTabla(function (err, clientes) {
-            console.log(clientes);
+
             if (err) {
-                console.log("Ocurrio un error", err);
+                crearLog(err);
                 callback("");
             } else {
                 //console.log(levels);
@@ -98,9 +116,9 @@ router.io.on('connection', function (socket) {
 
     socket.on('Cargar actas', function (callback) {
         controllerActa.getTabla(function (err, actas) {
-            console.log(actas);
+
             if (err) {
-                console.log("Ocurrio un error", err);
+                crearLog(err);
                 callback("");
             } else {
                 //console.log(levels);
@@ -116,9 +134,9 @@ router.io.on('connection', function (socket) {
 
     socket.on('Cargar estados', function (callback) {
         controllerCliente.getComboEstado(function (err, estados) {
-            console.log(estados);
+
             if (err) {
-                console.log("Ocurrio un error", err);
+                crearLog(err);
                 callback("");
             } else {
                 //console.log(levels);
@@ -133,7 +151,7 @@ router.io.on('connection', function (socket) {
 
         controllerCliente.eliminar(cedula, function (error, body) {//llama a la funcion eliminar
             if (error) {
-
+                crearLog(error);
                 callback({error: true});
 
             } else {
@@ -150,7 +168,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.insertArticulo(datos, function (error, body) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
-                console.log(error);
+                crearLog(error);
                 callback(0);
 
             } else {
@@ -161,12 +179,12 @@ router.io.on('connection', function (socket) {
     });
 
     socket.on('Guardar contrato', function (datos, callback) {
-        console.log('   LOS DATOS SOOOON: ' + datos);
+
 
 
         controllerContrato.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
-                console.log(error);
+                crearLog(error);
                 callback(error);
 
             } else {
@@ -177,14 +195,10 @@ router.io.on('connection', function (socket) {
     });
 
     socket.on('Guardar producto', function (datos, callback) {
-        console.log('   LOS DATOS SOOOON: ' + datos);
-
-
-
 
         controllerModelo.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
-                console.log(error);
+                crearLog(error);
                 callback(error);
 
             } else {
@@ -195,12 +209,10 @@ router.io.on('connection', function (socket) {
     });
 
     socket.on('Guardar acta', function (datos, callback) {
-        console.log('   LOS DATOS SOOOON: ' + datos);
-
 
         controllerActa.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
-                console.log(error);
+                crearLog(error);
                 callback(error);
 
             } else {
@@ -210,13 +222,10 @@ router.io.on('connection', function (socket) {
 
     });
 
-     socket.on('Guardar acta prod', function (datos, callback) {
-        console.log('   LOS DATOS SOOOON: ' + datos);
-
-
+    socket.on('Guardar acta prod', function (datos, callback) {
         controllerActa.insertProd(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
-                console.log(error);
+                crearLog(error);
                 callback(error);
 
             } else {
@@ -233,7 +242,7 @@ router.io.on('connection', function (socket) {
 
         controllerCliente.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
-                console.log(error);
+                crearLog(error);
                 callback(error);
 
             } else {
@@ -247,7 +256,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getTabla(categoria, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -262,7 +271,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getUbicacion(almacen, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -277,7 +286,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getTablaMarca(marca, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -293,7 +302,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getGlobal(terminoBusqueda, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -304,12 +313,12 @@ router.io.on('connection', function (socket) {
 
     });
 
-     socket.on('Busqueda global Acta', function (terminoBusqueda, callback) {
+    socket.on('Busqueda global Acta', function (terminoBusqueda, callback) {
         console.log(terminoBusqueda);
 
         controllerModelo.getGlobalActa(terminoBusqueda, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -324,7 +333,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getTablaUbicacion(ubicacion, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -339,7 +348,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getTablaFecha(rango, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -355,7 +364,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getDetalle(codigo, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -371,7 +380,7 @@ router.io.on('connection', function (socket) {
 
         controllerActa.getDetalle(codigo, function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -386,7 +395,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_modelo', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -401,7 +410,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_ultimosAgregados', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -416,7 +425,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_categoria', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -431,7 +440,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTablaChart('v_categoriaChart', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -446,7 +455,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTablaChart('v_almacenchart', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -461,7 +470,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_ubicacion', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -476,7 +485,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_ubicacion', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -491,7 +500,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_proveedor', function (error, marcas) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -506,7 +515,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_marca', function (error, marcas) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -521,7 +530,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_modelo', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {
@@ -536,7 +545,7 @@ router.io.on('connection', function (socket) {
 
         controllerModelo.getAllTabla('v_ubicacion', function (error, productos) {
             if (error) {
-
+                crearLog(error);
                 callback();
 
             } else {

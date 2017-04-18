@@ -38,6 +38,22 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     },
+    getTablaLogs: function (callback) {
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(err, null)
+            } else {
+                connection.query('SELECT  * FROM v_log', function (error, results, fields) {//
+                    if (error) {
+                        callback('error en la consulta: ' + error, null);
+                    } else {
+                        callback(null, {log: results});
+                        connection.release(); //Da por finalizado la consulta
+                    }
+                });
+            }
+        });
+    },
     //insertar datos en la tabla datos
     insert: function (datos, callback) {//la variable datos contiene todo lo que se va a insertar en formato json
         iniciar.getConnection(function (err, connection) {
@@ -51,6 +67,27 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                     } else {
                         console.log('LOS ROOOOOWS SON' + rows[0]);
                         console.log(results);
+
+                        callback(results);
+                        //indica el numero de filas afectadas
+                        connection.release();
+                    }
+                });
+            }
+        });
+    },
+    
+        insertLog: function (mensaje, callback) {//la variable datos contiene todo lo que se va a insertar en formato json
+        iniciar.getConnection(function (err, connection) {
+            if (err) {
+                callback(err, null);
+            } else {
+                connection.query("INSERT INTO `error` (`hora_error`, `fecha_error`, `mensaje_error`) VALUES (CURRENT_TIME(), CURRENT_DATE(), '"+mensaje+"')", mensaje, function (error, results, rows) {
+
+                    if (error) {
+                        callback('error en la insercion: ' + error, null);
+                    } else {
+                      
 
                         callback(results);
                         //indica el numero de filas afectadas

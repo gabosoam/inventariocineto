@@ -124,7 +124,7 @@ function guardarActas() {
         hora: document.getElementById("hora").value,
         contrato: document.getElementById("contrato").value,
         descripcion: document.getElementById("descripcion").value,
-        usuario: document.getElementById("lblUsuario").textContent
+        usuario: document.getElementById("nombreUsuario").value
     };
 
 

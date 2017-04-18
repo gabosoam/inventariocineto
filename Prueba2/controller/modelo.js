@@ -284,7 +284,8 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                         + "'" + datos.codigo + "',"
                         + "'" + datos.nombre + "',"
                         + "'" + datos.categoria + "',"
-                        + "'" + datos.marca + "'"
+                        + "'" + datos.marca + "',"
+                        + "'" + datos.usuario + "'"
                         + ") AS mensaje", datos, function (error, results, rows) {
 
                             if (error) {

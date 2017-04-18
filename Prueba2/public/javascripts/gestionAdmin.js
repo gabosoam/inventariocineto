@@ -5,6 +5,7 @@ $(document).ready(function () {
     cargarTabla();
     cargarTablaContratos();
     cargarTablaUsuarios();
+    cargarTablaLogs();
 
 
 });
@@ -47,6 +48,15 @@ function cargarTablaUsuarios() {
     });
 }
 
+function cargarTablaLogs() {
+   
+    socket.emit('Cargar logs', function (contratos) {
+     
+        w3.displayObject("listaLog", contratos);
+        w3.removeClass('listaLog','w3-hide');
+    });
+}
+
 function openCity(evt, cityName) {
     var i, x, tablinks;
     x = document.getElementsByClassName("city");
@@ -62,6 +72,7 @@ function openCity(evt, cityName) {
 }
 
 function guardarContrato() {
+    alert('hola');
 
     var datos = {
 
@@ -69,7 +80,8 @@ function guardarContrato() {
         inicio: document.getElementById("inicio").value,
         final: document.getElementById("final").value,
         descripcion: document.getElementById("descripcion").value,
-        cliente: document.getElementById("cliente").value
+        cliente: document.getElementById("cliente").value,
+        usuario: document.getElementById("nombreUsuario").value
 
     };
     if (datos.id == '' || datos.id == null) {

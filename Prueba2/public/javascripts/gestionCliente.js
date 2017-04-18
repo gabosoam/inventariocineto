@@ -34,7 +34,8 @@ function guardarCliente() {
         fecha: document.getElementById("fecha").value,
         pais: document.getElementById("pais").value,
         ciudad: document.getElementById("ciudad").value,
-        direccion: document.getElementById("direccion").value
+        direccion: document.getElementById("direccion").value,
+        usuario: document.getElementById("nombreUsuario").value
 
     };
     if (datos.cedula == '' || datos.cedula == null) {

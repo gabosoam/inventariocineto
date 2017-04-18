@@ -16,6 +16,7 @@ function cargarTabla() {
 }
 
 function guardarContrato() {
+   
 
     var datos = {
 
@@ -23,7 +24,8 @@ function guardarContrato() {
         inicio: document.getElementById("inicio").value,
         final: document.getElementById("final").value,
         descripcion: document.getElementById("descripcion").value,
-        cliente: document.getElementById("cliente").value
+        cliente: document.getElementById("cliente").value,
+        usuario: document.getElementById("nombreUsuario").value
 
     };
     if (datos.id == '' || datos.id == null) {

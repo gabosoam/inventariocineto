@@ -18,7 +18,26 @@
 
     <body class="w3-white" >
 
-        <div w3-include-html="../header.html"></div> 
+        <div class="topnav" id="myTopnav">
+
+
+            <a href="/home" class="w3-bar-item w3-button "><span class="fa fa-home"></span> Inicio</a>
+            <a href="/cliente" class="w3-bar-item w3-button"><span class="fa fa-address-book"></span> Clientes</a>
+
+            <a href="/inventario" class="w3-bar-item w3-button"><span class="fa fa-th-large"></span> Inventario</a>
+
+            <a href="/acta" class="w3-bar-item w3-button"><span class="fa fa-file"></span> Actas</a>
+
+
+            <a href="/logout" class="w3-bar-item w3-right"><span class="fa fa-sign-out"></span> Cerrar sesión</a>
+            <a  class="w3-bar-item w3-right"><span class="fa fa-user-circle"></span> <%-usuario.nombres_usuario%></a>
+            <input id="nombreUsuario" class="w3-hide" value="<%-usuario.nombre_usuario%>">
+
+
+
+            <a style="font-size:15px;" class="icon" onclick="myFunction()"> <span class="fa fa-bars"></span></a>
+
+        </div>
 
 
         <div class="w3-bar w3-light-grey w3-padding w3-card-4 ">
@@ -46,7 +65,7 @@
         </div>
         <div class="w3-main" style="margin-left:200px">
 
-     
+
 
             <div class="w3-white">
                 <button class="w3-button w3-white w3-text-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776; </button>
@@ -55,8 +74,8 @@
             </div>
             <div class="w3-container ">
                 <h4 id="mensaje"></h4>
-                
-               
+
+
 
                 <ul id="listaClientes" class="w3-ul w3-card-4 w3-white w3-hide">
                     <li class="w3-padding-16" w3-repeat="clientes">

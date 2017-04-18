@@ -126,7 +126,8 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                         + "'" + datos.fecha + "',"
                         + "'" + datos.pais + "',"
                         + "'" + datos.ciudad + "',"
-                        + "'" + datos.direccion + "'"
+                        + "'" + datos.direccion + "',"
+                        + "'" + datos.usuario + "'"
                         + ") AS mensaje", datos, function (error, results, rows, mensaje) {
 
                             if (error) {
