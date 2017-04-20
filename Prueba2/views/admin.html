@@ -203,7 +203,7 @@
                 <div class="w3-bar w3-white w3-padding ">
 
                     <div class=" w3-mobile">
-                        <button onclick="document.getElementById('modalNuevo').style.display = 'block'" class=" w3-bar-item w3-button w3-teal w3-btn w3-left  "><span class="fa fa-plus"></span> Agregar usuario</button>
+                        <button onclick="document.getElementById('modalNuevoUsuario').style.display = 'block'" class=" w3-bar-item w3-button w3-teal w3-btn w3-left  "><span class="fa fa-plus"></span> Agregar usuario</button>
                         <button class="w3-bar-item w3-button w3-teal w3-right w3-border "><span class="fa fa-search"></span></button>
                         <input oninput="w3.filterHTML('#listaUsuarios', '.item', this.value)" id="txtBuscar" type="text" class="w3-bar-item w3-input w3-white w3-right w3-border "
                                placeholder="Buscar usuario..">
@@ -228,7 +228,7 @@
                                     <td>{{usuario}}</td>
                                     <td>{{nombre}}</td>
                                     <td>{{rol}}</td>
-                                    <td></td>
+                                    <td><button class="w3-button w3-transparent"><span class="fa fa-trash"></span></button></td>
 
                                 </tr>
                             </tbody>
@@ -313,60 +313,7 @@
 
 
 
-        <div id="id01" class="w3-modal">
-            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-
-                <div class="w3-center"><br>
-                    <div class=" w3-container w3-teal-gray">
-                        <h3>Nuevo Cliente</h3>
-                    </div>
-                </div>
-
-                <form class="w3-container" method="post" action="/cliente/nuevoRegistro">
-                    <div class="w3-section">
-                        <div class="w3-row">
-                            <div class="w3-col s12 m12 l6 w3-padding">
-
-                                <input class="w3-input w3-mobile" type="text" placeholder="Ingresar cédula" name="cedula" required>
-                                <input class="w3-input" type="text" placeholder="Ingresar nombres" name="nombre" required>
-                                <input class="w3-input" type="text" placeholder="Ingresar apellidos" name="apellido" required>
-                                <select id="genero" class="w3-select" name="genero" required>
-
-                                </select>
-                                <select id="estado" class="w3-select" name="estado" required>
-                                    <option disabled selected>Seleccionar estado civil...</option>
-                                </select>
-                                <input class="w3-input" type="number" placeholder="No. teléfono fijo" name="domicilio" required>
-
-
-
-                            </div>
-
-                            <div class="w3-col s12 m12 l6 w3-padding">
-                                <input class="w3-input" type="number" placeholder="No. celular" name="celular" required>
-                                <input class="w3-input" type="email" placeholder="Email" name="correo" required>
-                                <input class="w3-input" type="date" placeholder="Fecha de nacimiento" name="fecha" required>
-                                <input class="w3-input" type="text" placeholder="País" name="pais" required>
-                                <input class="w3-input" type="text" placeholder="Ciudad" name="ciudad" required>
-                                <input class="w3-input" type="text" placeholder="Dirección" name="direccion" required>
-                            </div>
-
-                        </div>
-
-
-                        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Guardar</button>
-
-
-                    </div>
-                </form>
-
-                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                    <button onclick="document.getElementById('id01').style.display = 'none'" type="button" class="w3-button w3-red">Cancelar</button>
-
-                </div>
-
-            </div>
-        </div>
+      
 
         <div id="modalNuevo" class="w3-modal ">
             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
@@ -389,6 +336,52 @@
                             <input class="w3-input w3-mobile" type="number" placeholder="Ingresar no. de cédula del cliente" id="cliente" required>
                             <button onclick="document.getElementById('modalNuevo').style.display = 'none'" class="w3-button  w3-dark-grey w3-right w3-section w3-padding">Cancelar</button>
                             <button onclick="guardarContrato()" class="w3-button  w3-teal w3-right w3-section w3-padding">Guardar</button>
+
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+        
+         <div id="modalNuevoUsuario" class="w3-modal ">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+                <header class="w3-container w3-teal">
+                    <span onclick="document.getElementById('modalNuevoUsuario').style.display = 'none'" class="w3-button w3-display-topright">&times;</span>
+                    <h4>Nuevo usuario</h4>
+                </header>
+
+
+                <div class="w3-section">
+
+                    <div class="w3-row">
+                        <div class="w3-col s12 m12 l12 w3-padding">
+
+                            <input class="w3-input w3-mobile" type="text" placeholder="Nombre de usuario" id="nickUser" required>
+                            <input class="w3-input w3-mobile" type="text" placeholder="Nombres" id="nombreUser" required>
+                            <input class="w3-input w3-mobile" type="text" placeholder="Cédula del usuario" id="cedulaUser" required>
+                            <select class="w3-select w3-mobile" id="rolUser">
+                                <option value="admin">Administrador</option>
+                                <option value="user">Usuario</option>
+                            </select>
+
+                            <button onclick="document.getElementById('modalNuevoUsuario').style.display = 'none'" class="w3-button  w3-dark-grey w3-right w3-section w3-padding">Cancelar</button>
+                            <button onclick="guardarUsuario()" class="w3-button  w3-teal w3-right w3-section w3-padding">Guardar</button>
 
 
 

@@ -16,44 +16,44 @@ function cargarTabla() {
         w3.displayObject("tablaEventos", actas);
     });
 
-   
+
 
 
 }
 
 function cargarTablaContratos() {
-   
+
     socket.emit('Cargar contratos', function (contratos) {
-     
+
         w3.displayObject("listaContratos", contratos);
-        w3.removeClass('#listaContratos','w3-hide');
+        w3.removeClass('#listaContratos', 'w3-hide');
     });
 }
 
 function cargarTablaContratos() {
-   
+
     socket.emit('Cargar contratos', function (contratos) {
-     
+
         w3.displayObject("listaContratos", contratos);
-        w3.removeClass('#listaContratos','w3-hide');
+        w3.removeClass('#listaContratos', 'w3-hide');
     });
 }
 
 function cargarTablaUsuarios() {
-   
+
     socket.emit('Cargar usuarios', function (contratos) {
-     
+
         w3.displayObject("listaUsuarios", contratos);
-        w3.removeClass('#listaUsuarios','w3-hide');
+        w3.removeClass('#listaUsuarios', 'w3-hide');
     });
 }
 
 function cargarTablaLogs() {
-   
+
     socket.emit('Cargar logs', function (contratos) {
-     
+
         w3.displayObject("listaLog", contratos);
-        w3.removeClass('listaLog','w3-hide');
+        w3.removeClass('listaLog', 'w3-hide');
     });
 }
 
@@ -72,7 +72,7 @@ function openCity(evt, cityName) {
 }
 
 function guardarContrato() {
-    alert('hola');
+
 
     var datos = {
 
@@ -100,6 +100,44 @@ function guardarContrato() {
             var mensaje = mensaje[0].nota;
 
             if (mensaje == 'El contrato ha sido registrado') {
+                swal('Bien', mensaje, "success");
+                document.getElementById('modalNuevo').style.display = 'none';
+                cargarTabla();
+            } else {
+                swal('Error', mensaje, "error");
+            }
+
+        });
+
+    }
+}
+
+function guardarUsuario() {
+
+
+    var datos = {
+
+        nickUser: document.getElementById("nickUser").value,
+        nombreUser: document.getElementById("nombreUser").value,
+        cedulaUser: document.getElementById("cedulaUser").value,
+        rolUser: document.getElementById("rolUser").value
+    };
+    
+
+    if (datos.nickUser == '' || datos.nickUser == null) {
+        swal("Error", "Ingrese el nombre de usuario", "error");
+    } else if (datos.nombreUser == '' || datos.nombreUser == null) {
+        swal("Error", "Ingrese los nombres del usuario", "error");
+    } else if (datos.cedulaUser == '' || datos.cedulaUser == null) {
+        swal("Error", "Ingrese el número de cédula del usuario", "error");
+    } else if (datos.rolUser == '' || datos.rolUser == null) {
+        swal("Error", "Escoja el rol del usuario", "error");
+    } else {
+        socket.emit('Guardar usuario', datos, function (mensaje) {
+
+            var mensaje = mensaje[0].nota;
+
+            if (mensaje == 'El usuario ha sido registrado') {
                 swal('Bien', mensaje, "success");
                 document.getElementById('modalNuevo').style.display = 'none';
                 cargarTabla();

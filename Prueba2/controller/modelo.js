@@ -97,7 +97,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             if (err) {
                 callback(err, null)
             } else {
-                connection.query('SELECT * FROM v_productos WHERE serie LIKE \'%' + termino + '%\' OR nombre LIKE \'%' + termino + '%\' OR categoria LIKE \'%' + termino + '%\'', function (error, results, fields) {//
+                connection.query('SELECT * FROM v_productos WHERE serie LIKE \'%' + termino + '%\' OR nombre LIKE \'%' + termino + '%\' OR codigo LIKE \'%' + termino + '%\'', function (error, results, fields) {//
                     if (error) {
                         callback('error en la consulta: ' + error, null);
                     } else {
@@ -352,4 +352,4 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
             }
         });
     }
-}
+};

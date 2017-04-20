@@ -52,7 +52,7 @@ function anadirProducto(actaProd, tipo) {
     acta = actaProd;
 
     if (tipo == 'De entrega') {
-        
+
     }
 
     switch (tipo) {
@@ -63,60 +63,42 @@ function anadirProducto(actaProd, tipo) {
             alert('Muy pronto');
             break;
         default:
-            
+
     }
-
-
-
-
-
 }
 
 function cargarTablaDetalle(codigo, cliente, contrato, descripcion, fecha, hora) {
-
-    var myObject = { acta: codigo, cliente: cliente, contrato: contrato, descripcion: descripcion, fecha: fecha, hora: hora };
-
+    var myObject={};
+    var myObject = {acta: codigo, cliente: cliente, contrato: contrato, descripcion: descripcion, fecha: fecha, hora: hora};
 
     socket.emit('Detalle Acta', codigo, function (productos) {
-
-
-
         if (productos.resultados.length > 0) {
             w3.displayObject("listaDetalle", productos);
 
             //    w3.displayObject("lblCodigo", productos);
             w3.displayObject("datosActa", myObject);
+            w3.displayObject("datosActa2", myObject);
             $('#lblCodigo').text('Vista previa');
-            //  $('#lblActa').text(codigo);
+           //   $('#lblActa').text(codigo);
             document.getElementById('modalVer').style.display = 'block';
         } else {
             swal("Aviso", "No existen productos para mostrar", "info");
         }
-
-
-
     });
-
-
 }
 
 function printDiv(div) {
     var divToPrint = document.getElementById(div);
     var newWin = window.open('', 'Print-Window', 'width=100%,height=100%,top=100,left=100');
     newWin.document.
-        newWin.document.open();
+            newWin.document.open();
     newWin.document.write('<html><head><style>#in {display:none}</style></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
     newWin.document.close();
     setTimeout(function () {
         newWin.close();
     }, 10);
-
 }
-
-
 function guardarActas() {
-
-
     var datos = {
         codigo: document.getElementById("codigo").value,
         tipo: document.getElementById("tipo").value,
@@ -126,8 +108,6 @@ function guardarActas() {
         descripcion: document.getElementById("descripcion").value,
         usuario: document.getElementById("nombreUsuario").value
     };
-
-
     if (datos.codigo == '' || datos.codigo == null) {
         swal('Error', 'Ingrese el código del producto');
     } else if (datos.tipo == '' || datos.tipo == null) {
@@ -142,9 +122,7 @@ function guardarActas() {
         swal('Error', 'Ingrese una drescripción');
     } else {
         socket.emit('Guardar acta', datos, function (mensaje) {
-
             var mensaje = mensaje[0].nota;
-
             if (mensaje == 'El acta ha sido generada') {
                 swal('Bien', mensaje, "success");
                 document.getElementById('modalNuevo').style.display = 'none';
@@ -152,28 +130,17 @@ function guardarActas() {
             } else {
                 swal('Error', mensaje, "error");
             }
-
         });
-
     }
-
 }
-
-
 function guardarProductos(serie, codigo) {
-
-
     var datos = {
         serie: serie,
         codigo: codigo,
-        acta: acta,
-
+        acta: acta
     };
-
     socket.emit('Guardar acta prod', datos, function (mensaje) {
-
         var mensaje = mensaje[0].nota;
-
         if (mensaje == 'El producto ha sido asignado correctamente') {
             swal('Bien', mensaje, "success");
             document.getElementById('modalAnadir').style.display = 'none';
@@ -181,16 +148,5 @@ function guardarProductos(serie, codigo) {
         } else {
             swal('Error', mensaje, "error");
         }
-
     });
-
-
-
-
-
-
-
-
-
-
 }

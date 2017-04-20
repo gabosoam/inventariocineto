@@ -5,13 +5,13 @@ $(document).ready(function () {
     cargarTabla();
 
 });
-
+//Muestra la lista de contratos 
 function cargarTabla() {
    
     socket.emit('Cargar contratos', function (contratos) {
      
         w3.displayObject("listaContratos", contratos);
-        w3.removeClass('#listaContratos','w3-hide');
+        w3.remdeoveClass('#listaContratos','w3-hide');
     });
 }
 

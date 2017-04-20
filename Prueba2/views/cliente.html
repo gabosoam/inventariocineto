@@ -94,8 +94,8 @@
                                 <span> <strong>Contratos: </strong>{{cantidad}}<br></span><br>
                                 <span onclick="eliminarCliente({{cedula}})" 
                                       ><button  class=" w3-button w3-white w3-border w3-border-gray   "><span class="fa fa-trash"></span></button></span>
-                                <span onclick="eliminarCliente({{cedula}})" 
-                                      ><button  class=" w3-button w3-white w3-border w3-border-gray   "><span class="fa fa-file"></span></button></span>
+                                <span onclick="modificarCliente('{{cedula}}','{{nombre}}','{{apellido}}','{{genero}}','{{estado}}','{{domicilio}}','{{celular}}','{{correo}}','{{fecha}}','{{pais}}','{{ciudad}}','{{direccion}}','{{usuario}}')" 
+                                      ><button  class=" w3-button w3-white w3-border w3-border-gray   "><span class="fa fa-pencil"></span></button></span>
                             </div>
                         </div>
 
@@ -165,6 +165,58 @@
 
             </div>
         </div>
+                <div id="modalModificar" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+                <header class="w3-container w3-teal"> 
+                    <span onclick="document.getElementById('modalModificar').style.display = 'none'" 
+                          class="w3-button w3-display-topright">&times;</span>
+                    <h4>Modificar Cliente</h4>
+                </header>
+
+                <div class="w3-container"  >
+                    <div class="w3-section">
+                        <div class="w3-row" id="datosCliente">
+                            <div class="w3-col s12 m12 l6 w3-padding" >
+
+                                <input class="w3-input w3-mobile w3-border" type="text" placeholder="Ingresar cédula" id="cedula" value="{{cedula}}" required disabled>                                          
+                                <input class="w3-input w3-border" type="text" placeholder="Ingresar nombres" id="nombre" value="{{nombre}}" required>
+                                <input class="w3-input w3-border" type="text" placeholder="Ingresar apellidos" id="apellido" value="{{apellido}}" required>
+                                <select id="genero2" class="w3-select w3-border"   id="genero" value="{{genero}}" required>
+
+                                </select>
+                                <select id="estado2" class="w3-select w3-border"   id="estado" value="{{estado}}" required>
+                                    <option disabled selected>Seleccionar estado civil...</option>
+                                </select>
+                                <input class="w3-input w3-border" type="number" placeholder="No. teléfono fijo" id="domicilio" value="{{domicilio}}" required>
+
+
+
+                            </div>
+
+                            <div class="w3-col s12 m12 l6 w3-padding">
+                                <input class="w3-input w3-border" type="number" placeholder="No. celular" id="celular" value="{{celular}}" required>
+                                <input class="w3-input w3-border" type="email" placeholder="Email" id="correo" value="{{correo}}" required>
+                                <input class="w3-input w3-border" type="date" placeholder="Fecha de nacimiento" id="fecha" value="{{fecha}}" required>
+                                <input class="w3-input w3-border" type="text" placeholder="País" id="pais" value="{{pais}}" required>
+                                <input class="w3-input w3-border" type="text" placeholder="Ciudad" id="ciudad" value="{{ciudad}}" required>
+                                <input class="w3-input w3-border" type="text" placeholder="Dirección" id="direccion" value="{{direccion}}" required>
+                            </div>
+
+                        </div>
+
+
+
+                        <button class="w3-button  w3-teal w3-right w3-section w3-padding" onclick="guardarCliente()">Guardar</button>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
 
 
 

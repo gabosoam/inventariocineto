@@ -86,8 +86,8 @@ router.io.on('connection', function (socket) {
             }
         });
     });
-    
-    
+
+
     socket.on('Cargar eventos', function (callback) {
         controllerModelo.getAllTabla('v_evento', function (err, clientes) {
             console.log(clientes);
@@ -183,6 +183,22 @@ router.io.on('connection', function (socket) {
 
 
         controllerContrato.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
+            if (error) {
+                crearLog(error);
+                callback(error);
+
+            } else {
+                callback(mensaje);
+            }
+        });
+
+    });
+
+    socket.on('Guardar usuario', function (datos, callback) {
+
+
+
+        controllerUsuario.insert(datos, function (error, mensaje) {//envio los datos a insertar dentro de la funcion insert
             if (error) {
                 crearLog(error);
                 callback(error);

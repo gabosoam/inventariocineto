@@ -80,15 +80,42 @@ function guardarCliente() {
 
 }
 
+function modificarCliente(cedula,nombre,apellido,genero,estado,domicilio,celular,correo,fecha,pais,ciudad,direccion,usuario) {
+
+    var datos = {
+
+        cedula: cedula,
+        nombre: nombre,
+        apellido: apellido,
+        genero: genero,
+        estado: estado,
+        domicilio: domicilio,
+        celular: celular,
+        correo: correo,
+        fecha: fecha,
+        pais: pais,
+        ciudad: ciudad,
+        direccion: direccion,
+        usuario: usuario
+
+    };
+   w3.displayObject("datosCliente", datos);
+   document.getElementById('modalModificar').style.display = 'block'
+
+}
+
+
 function cargarGeneros() {
     socket.emit('Cargar generos', function (generos) {
         var data = '<option value="">Seleccionar género...</option>',
                 cb = $('#genero');
+                cb2 = $('#genero2');
         for (var i = 0; i < generos.length; i++) {
             var lvl = generos[i].nombre;
             data += '<option name="' + lvl + '">' + lvl + '</option>'
         }
         cb.html(data);
+        cb2.html(data);
     });
 
 }
@@ -113,11 +140,13 @@ function cargarEstados() {
     socket.emit('Cargar estados', function (estados) {
         var data = '<option value="">Seleccionar estado civil...</option>',
                 cb = $('#estado');
+                cb2 = $('#estado2');
         for (var i = 0; i < estados.length; i++) {
             var lvl = estados[i].nombre;
             data += '<option name="' + lvl + '">' + lvl + '</option>'
         }
         cb.html(data);
+        cb2.html(data);
     });
 
 }
@@ -162,19 +191,21 @@ function eliminarCliente(cedula) {
 
 function cargarTabla() {
     socket.emit('Cargar clientes', function (clientes) {
-        w3.displayObject("listaClientes", clientes);
-        w3.removeClass('#listaClientes', 'w3-hide');
+
+        if (clientes.clientes.length > 0) {
+            w3.displayObject("listaClientes", clientes);
+            w3.removeClass('#listaClientes', 'w3-hide');
+        }
+
 
     });
 
 
 }
-
-
 function cambiar() {
-  
+
     socket.emit('Cambiar', function () {
-  
+
 
     });
 }
