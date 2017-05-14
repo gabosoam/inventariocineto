@@ -133,10 +133,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                             if (error) {
                                 callback('error en la insercion: ' + error, null);
                             } else {
-                            
-
                                 callback(results);
-                                //indica el numero de filas afectadas
                                 connection.release();
                             }
                         });
