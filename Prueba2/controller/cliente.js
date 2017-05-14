@@ -109,7 +109,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
         });
     },
     //insertar datos en la tabla datos
-    insert: function (datos, callback) {//la variable datos contiene todo lo que se va a insertar en formato json
+    insert: function (datos, callback) {
         iniciar.getConnection(function (err, connection) {
             if (err) {
                 callback(err, null)
