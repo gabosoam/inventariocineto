@@ -53,7 +53,7 @@ module.exports = {//module.exports me permite utilizar todas las funciones en ot
                         console.log(results);
 
                         callback(results);
-                        //indica el numero de filas afectadas
+                  
                         connection.release();
                     }
                 });
